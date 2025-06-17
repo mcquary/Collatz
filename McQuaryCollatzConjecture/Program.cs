@@ -370,9 +370,10 @@ namespace Collatz
                         evenCount++;
                         // Collatz Even Step... x / 2 in decimal, x >> 1 in binary operations
                         list.RemoveAt(list.Count - 1);
+                        decimalText = $" \\({GetLong(list)}_{{10}}\\)";
 
                         if (!skipOutput)
-                            sb.AppendLine($"    - Step \\({step}\\) Right Shift: {decimalText} - Binary Result: \\({PrintBinaryString(list)}_2 \\)");
+                            sb.AppendLine($"    - Step \\({step}\\) Right Shift Result: {decimalText} - Binary Result: \\({PrintBinaryString(list)}_2 \\)");
                     }
                     else // Odd Step
                     {
