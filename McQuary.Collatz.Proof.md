@@ -725,20 +725,20 @@ The bit length of \(X\) satisfies:
 
 ### 9.3 Decomposition of \(X\)
 
-Any integer \(X\) after \(2N - 1\) steps can be decomposed as:
+Any integer \(X\) after \(2N - 1 - a\) steps can be decomposed as:
 \[
-X = m \cdot 2^a, \quad \text{where } m \text{ is odd}.
+X = m \cdot 2^a, \quad \text{where } m \text{ is odd}. \tag{9.2}
 \]
 The bit length of \(m\) satisfies:
 \[
-\ell_m \leq 2b(x) + 1 - a. \tag{9.2}
+\ell_m \leq 2b(x) + 1 - a. \tag{9.3}
 \]
 
 ### 9.4 Maximum Value of \(m\)
 
 The largest odd integer with bit length \(\leq 2b(x) + 1 - a\) is:
 \[
-m \leq 2^{2b(x) + 1 - a} - 1. \tag{9.3}
+m \leq 2^{2b(x) + 1 - a} - 1. \tag{9.4}
 \]
 
 ### 9.5 Scaling Factor Analysis
@@ -1020,7 +1020,7 @@ Assume $ C^k(n) \to \infty $. Then $ b(C^k(n)) \to \infty $, violating Theorem 1
 **Definition:**
 From Definition 7.2, a positive integer \( n \) is in the **Trailing 1s** category if its binary representation ends with $ N \in \mathbb{N}^+ $ ($ N > 1 $) consecutive 1s. This implies:  
 $$
-X = a \cdot 2^N + (2^N - 1), \quad \text{for some } a \in \mathbb{N}.
+X = a \cdot 2^N + (2^N - 1), \quad \text{for some } a \in \mathbb{N}. \tag{7.2}
 $$
 and represents $2^n-1$ when $a = 0$
 
@@ -1030,7 +1030,7 @@ and represents $2^n-1$ when $a = 0$
 A positive integer \( n \) is in the **Trailing 0s** category if its binary representation ends with $ N \in \mathbb{N}^+ $ ($ N > 1 $) consecutive 0s. This implies:  
 Any even integer its odd part $m$ and power of 2 factor $2^a$:  
 $$
-X = m \cdot 2^a, \quad \text{where } m \text{ is odd}. \tag{9.3}
+X = m \cdot 2^a, \quad \text{where } m \text{ is odd}. \tag{9.2}
 $$  
 This decomposition follows from the fundamental theorem of arithmetic.  
 This form will strictly reduce by $a$ bits having $a = v_2(X)$ and $v_2(X)$ is the 2-adic representation of X.
@@ -1061,9 +1061,6 @@ $$
 
 As shown in Theorem 10.3, **no non-trivial cycle exists**.
 
----
-
-#### 11.5 Final Contradiction  
 The assumption of a counterexample leads to contradictions:  
 1. Divergence violates Theorem 11.1.  
 2. Non-trivial cycles violate Theorems 11.3–11.5.  
