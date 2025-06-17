@@ -627,9 +627,74 @@ b(Z) \leq 2b(X) + 1 - a. \tag{7.7}
   \]
   Actual \( b(Z) = 4 \leq 5 \).
 
----
 
-#### 7.5 Conclusion
+## 7.6 - Largest Possible Sequence of 1s after Initial set.
+
+### Theorem 7.6.1:
+For an odd integer \( N \), let \( t(N) \) denote the length of the longest sequence of trailing `1`s in its binary representation. Then, \( t(N) \) is the largest integer \( k \) such that:
+\[
+N \equiv 2^k - 1 \pmod{2^{k+1}} \tag{7.15}
+\]
+### Proof:
+#### Step 1: Binary Representation and Trailing `1`s
+Consider an odd integer \( N \). The binary representation of \( N \) can be written as:
+\[
+N = b_m b_{m-1} \ldots b_2 b_1 b_0 \tag{7.16}
+\]
+where \( b_i \in \{0, 1\} \) and \( b_0 = 1 \) (since \( N \) is odd).
+Let \( t(N) \) be the number of trailing `1`s in the binary representation of \( N \). This means:
+\[
+N = b_m b_{m-1} \ldots b_{t+1} 1 1 \ldots 1_2  \tag{7.17}
+\]
+where there are exactly \( t(N) \) trailing `1`s.
+#### Step 2: Modular Arithmetic and Trailing `1`s
+We need to show that \( t(N) \) is the largest integer \( k \) such that:
+\[
+N \equiv 2^k - 1 \pmod{2^{k+1}}  \tag{7.18}
+\]
+##### Forward Direction:
+Assume \( N \) has exactly \( t(N) \) trailing `1`s. Then, we can write:
+\[
+N = m \cdot 2^{t(N) + 1} + (2^{t(N)} - 1)  \tag{7.19}
+\]
+for some integer \( m \). This is because the binary representation of \( N \) ends with \( t(N) \) `1`s followed by a `0` or higher bits.
+Taking modulo \( 2^{t(N) + 1} \):
+\[
+N \equiv 2^{t(N)} - 1 \pmod{2^{t(N) + 1}}  \tag{7.20}
+\]
+This shows that if \( N \) has exactly \( t(N) \) trailing `1`s, then:
+\[
+N \equiv 2^{t(N)} - 1 \pmod{2^{t(N) + 1}}  \tag{7.21}
+\]
+##### Backward Direction:
+Assume \( N \equiv 2^k - 1 \pmod{2^{k+1}} \). We need to show that the binary representation of \( N \) has exactly \( k \) trailing `1`s.
+Since \( N \equiv 2^k - 1 \pmod{2^{k+1}} \), we can write:
+\[
+N = m \cdot 2^{k+1} + (2^k - 1)  \tag{7.22}
+\]
+for some integer \( m \). The term \( 2^k - 1 \) in binary is represented as a sequence of \( k \) `1`s. Therefore, the last \( k \) bits of \( N \) are all `1`s.
+To ensure that \( k \) is the largest such integer, we need to show that \( N \not\equiv 2^{k+1} - 1 \pmod{2^{k+2}} \). If \( N \equiv 2^{k+1} - 1 \pmod{2^{k+2}} \), then:
+\[
+N = m' \cdot 2^{k+2} + (2^{k+1} - 1)  \tag{7.23}
+\]
+for some integer \( m' \). This would imply that the last \( k+1 \) bits of \( N \) are all `1`s, contradicting the assumption that \( k \) is the largest such integer.
+Therefore, \( k \) must be the exact number of trailing `1`s in the binary representation of \( N \).
+### Conclusion:
+The length \( t(N) \) of the longest sequence of trailing `1`s in the binary representation of an odd integer \( N \) is the largest integer \( k \) such that:
+\[
+N \equiv 2^k - 1 \pmod{2^{k+1}}  \tag{7.24}
+\]
+This completes the proof. 
+### Algorithmic Implementation (for clarity):
+To find \( t(N) \) algorithmically, we can use the following steps:
+1. Start with \( k = \lfloor \log_2(N) \rfloor \).
+2. Check if \( N \equiv 2^k - 1 \pmod{2^{k+1}} \).
+3. If true, return \( k \). Otherwise, decrement \( k \) and repeat step 2.
+This method ensures that we find the largest \( k \) efficiently by starting from the highest possible value and working downwards.
+
+
+
+#### 7.7 Conclusion
 Theorem 1 establishes a tight bound on the bit-length after \( 2N - 1 \) steps for numbers ending with \( N \) trailing 1s in their binary representation. The bound \( b_{\text{max}} \leq b(X) + N + 1 \) accounts for the alternating growth and reduction phases of the Collatz function. Corollary 1 further refines this bound after \( a \) additional steps of division by 2, yielding \( b(Z) \leq 2b(X) + 1 - a \). These results provide a rigorous framework for analyzing the behavior of Collatz sequences, particularly the interplay between bit-length growth and 2-adic reduction.
 
 
