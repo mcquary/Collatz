@@ -45,7 +45,6 @@ namespace Collatz
         {
             Regex reg = new Regex("[0-1]*");
             return reg.IsMatch(input);
-            //            return input.Count(x => !(x == '1' || x == '0')) == 0;
         }
         static bool IsValidPositiveBase10(string input)
         {
@@ -239,10 +238,10 @@ namespace Collatz
             /// until the decimal representation can fit into a 64-bit integer
             /// </summary>
             /// <param name="number"></param>
-            public void AnalyzeBinary(string number, string outputFileName, bool printGraph = false, bool speedRun = false)
+            public void AnalyzeBinary(string number, string outputFileName, bool printGraph = false, bool skipOutput = false)
             {
                 var list = GetBinaryListFromBinaryString(number);
-                AnalyzeWithListOfBools(list, outputFileName, printGraph, speedRun);
+                AnalyzeWithListOfBools(list, outputFileName, printGraph, skipOutput);
             }
 
             /// <summary>
