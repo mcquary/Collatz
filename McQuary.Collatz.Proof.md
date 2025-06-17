@@ -1666,3 +1666,364 @@ Table C.1 Maximum bits for 2^N-1 up to N = 100
 |158456325028528675187087900671|97|155|136|
 |316912650057057350374175801343|98|157|137|
 |633825300114114700748351602687|99|158|139|
+
+# Appendix D
+## D.1 Process n=5, 2^n-1 = 31
+Input Number Decimal: 31
+
+Input Number Binary: 11111
+- **Forecast: Growth stops at step: \(9\); Step Number for next guaranteed multi-bit reduction: \(10 (10)\)...**
+---
+- **Step \(1\): Decimal:  \(31_{10}\) = Binary: \(11111_2\)**
+- **Forecast: Growth stops at step: \(9\); Step Number for next guaranteed multi-bit reduction: \(10 (10)\)...**
+    - Left Shift \((2x)\): Decimal Result:  \(62_{10}\) - Binary Result: \(111110_2 \)
+    - Add \(X\): Decimal Result:  \(93_{10}\) - Binary Result: \(1011101_2 \)
+    - Add \(1\): Decimal Result:  \(94_{10}\) - Binary Result: \(1011110_2 \)
+- **Step \(2\): Decimal:  \(94_{10}\) = Binary: \(1011110_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(10 (9)\)...**
+    - Step \(1\) Right Shift:  \(94_{10}\) - Binary Result: \(101111_2 \)
+- **Step \(3\): Decimal:  \(47_{10}\) = Binary: \(101111_2\)**
+- **Forecast: Growth stops at step: \(9\); Step Number for next guaranteed multi-bit reduction: \(10 (8)\)...**
+    - Left Shift \((2x)\): Decimal Result:  \(94_{10}\) - Binary Result: \(1011110_2 \)
+    - Add \(X\): Decimal Result:  \(141_{10}\) - Binary Result: \(10001101_2 \)
+    - Add \(1\): Decimal Result:  \(142_{10}\) - Binary Result: \(10001110_2 \)
+- **Step \(4\): Decimal:  \(142_{10}\) = Binary: \(10001110_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(10 (7)\)...**
+    - Step \(3\) Right Shift:  \(142_{10}\) - Binary Result: \(1000111_2 \)
+- **Step \(5\): Decimal:  \(71_{10}\) = Binary: \(1000111_2\)**
+- **Forecast: Growth stops at step: \(9\); Step Number for next guaranteed multi-bit reduction: \(10 (6)\)...**
+    - Left Shift \((2x)\): Decimal Result:  \(142_{10}\) - Binary Result: \(10001110_2 \)
+    - Add \(X\): Decimal Result:  \(213_{10}\) - Binary Result: \(11010101_2 \)
+    - Add \(1\): Decimal Result:  \(214_{10}\) - Binary Result: \(11010110_2 \)
+- **Step \(6\): Decimal:  \(214_{10}\) = Binary: \(11010110_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(10 (5)\)...**
+    - Step \(5\) Right Shift:  \(214_{10}\) - Binary Result: \(1101011_2 \)
+- **Step \(7\): Decimal:  \(107_{10}\) = Binary: \(1101011_2\)**
+- **Forecast: Growth stops at step: \(9\); Step Number for next guaranteed multi-bit reduction: \(10 (4)\)...**
+    - Left Shift \((2x)\): Decimal Result:  \(214_{10}\) - Binary Result: \(11010110_2 \)
+    - Add \(X\): Decimal Result:  \(321_{10}\) - Binary Result: \(101000001_2 \)
+    - Add \(1\): Decimal Result:  \(322_{10}\) - Binary Result: \(101000010_2 \)
+- **Step \(8\): Decimal:  \(322_{10}\) = Binary: \(101000010_2\)**
+    - Step \(7\) Right Shift:  \(322_{10}\) - Binary Result: \(10100001_2 \)
+- **Step \(9\): Decimal:  \(161_{10}\) = Binary: \(10100001_2\)**
+    - Left Shift \((2x)\): Decimal Result:  \(322_{10}\) - Binary Result: \(101000010_2 \)
+    - Add \(X\): Decimal Result:  \(483_{10}\) - Binary Result: \(111100011_2 \)
+    - Add \(1\): Decimal Result:  \(484_{10}\) - Binary Result: \(111100100_2 \)
+- **Step \(10\): Decimal:  \(484_{10}\) = Binary: \(111100100_2\)**
+    - Step \(9\) Right Shift:  \(484_{10}\) - Binary Result: \(11110010_2 \)
+- **Step \(11\): Decimal:  \(242_{10}\) = Binary: \(11110010_2\)**
+    - Step \(10\) Right Shift:  \(242_{10}\) - Binary Result: \(1111001_2 \)
+- **Step \(12\): Decimal:  \(121_{10}\) = Binary: \(1111001_2\)**
+    - Left Shift \((2x)\): Decimal Result:  \(242_{10}\) - Binary Result: \(11110010_2 \)
+    - Add \(X\): Decimal Result:  \(363_{10}\) - Binary Result: \(101101011_2 \)
+    - Add \(1\): Decimal Result:  \(364_{10}\) - Binary Result: \(101101100_2 \)
+- **Step \(13\): Decimal:  \(364_{10}\) = Binary: \(101101100_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(18 (6)\)...**
+    - Step \(12\) Right Shift:  \(364_{10}\) - Binary Result: \(10110110_2 \)
+- **Step \(14\): Decimal:  \(182_{10}\) = Binary: \(10110110_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(18 (5)\)...**
+    - Step \(13\) Right Shift:  \(182_{10}\) - Binary Result: \(1011011_2 \)
+- **Step \(15\): Decimal:  \(91_{10}\) = Binary: \(1011011_2\)**
+- **Forecast: Growth stops at step: \(17\); Step Number for next guaranteed multi-bit reduction: \(18 (4)\)...**
+    - Left Shift \((2x)\): Decimal Result:  \(182_{10}\) - Binary Result: \(10110110_2 \)
+    - Add \(X\): Decimal Result:  \(273_{10}\) - Binary Result: \(100010001_2 \)
+    - Add \(1\): Decimal Result:  \(274_{10}\) - Binary Result: \(100010010_2 \)
+- **Step \(16\): Decimal:  \(274_{10}\) = Binary: \(100010010_2\)**
+    - Step \(15\) Right Shift:  \(274_{10}\) - Binary Result: \(10001001_2 \)
+- **Step \(17\): Decimal:  \(137_{10}\) = Binary: \(10001001_2\)**
+    - Left Shift \((2x)\): Decimal Result:  \(274_{10}\) - Binary Result: \(100010010_2 \)
+    - Add \(X\): Decimal Result:  \(411_{10}\) - Binary Result: \(110011011_2 \)
+    - Add \(1\): Decimal Result:  \(412_{10}\) - Binary Result: \(110011100_2 \)
+- **Step \(18\): Decimal:  \(412_{10}\) = Binary: \(110011100_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(25 (8)\)...**
+    - Step \(17\) Right Shift:  \(412_{10}\) - Binary Result: \(11001110_2 \)
+- **Step \(19\): Decimal:  \(206_{10}\) = Binary: \(11001110_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(25 (7)\)...**
+    - Step \(18\) Right Shift:  \(206_{10}\) - Binary Result: \(1100111_2 \)
+- **Step \(20\): Decimal:  \(103_{10}\) = Binary: \(1100111_2\)**
+- **Forecast: Growth stops at step: \(24\); Step Number for next guaranteed multi-bit reduction: \(25 (6)\)...**
+    - Left Shift \((2x)\): Decimal Result:  \(206_{10}\) - Binary Result: \(11001110_2 \)
+    - Add \(X\): Decimal Result:  \(309_{10}\) - Binary Result: \(100110101_2 \)
+    - Add \(1\): Decimal Result:  \(310_{10}\) - Binary Result: \(100110110_2 \)
+- **Step \(21\): Decimal:  \(310_{10}\) = Binary: \(100110110_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(25 (5)\)...**
+    - Step \(20\) Right Shift:  \(310_{10}\) - Binary Result: \(10011011_2 \)
+- **Step \(22\): Decimal:  \(155_{10}\) = Binary: \(10011011_2\)**
+- **Forecast: Growth stops at step: \(24\); Step Number for next guaranteed multi-bit reduction: \(25 (4)\)...**
+    - Left Shift \((2x)\): Decimal Result:  \(310_{10}\) - Binary Result: \(100110110_2 \)
+    - Add \(X\): Decimal Result:  \(465_{10}\) - Binary Result: \(111010001_2 \)
+    - Add \(1\): Decimal Result:  \(466_{10}\) - Binary Result: \(111010010_2 \)
+- **Step \(23\): Decimal:  \(466_{10}\) = Binary: \(111010010_2\)**
+    - Step \(22\) Right Shift:  \(466_{10}\) - Binary Result: \(11101001_2 \)
+- **Step \(24\): Decimal:  \(233_{10}\) = Binary: \(11101001_2\)**
+    - Left Shift \((2x)\): Decimal Result:  \(466_{10}\) - Binary Result: \(111010010_2 \)
+    - Add \(X\): Decimal Result:  \(699_{10}\) - Binary Result: \(1010111011_2 \)
+    - Add \(1\): Decimal Result:  \(700_{10}\) - Binary Result: \(1010111100_2 \)
+- **Step \(25\): Decimal:  \(700_{10}\) = Binary: \(1010111100_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(34 (10)\)...**
+    - Step \(24\) Right Shift:  \(700_{10}\) - Binary Result: \(101011110_2 \)
+- **Step \(26\): Decimal:  \(350_{10}\) = Binary: \(101011110_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(34 (9)\)...**
+    - Step \(25\) Right Shift:  \(350_{10}\) - Binary Result: \(10101111_2 \)
+- **Step \(27\): Decimal:  \(175_{10}\) = Binary: \(10101111_2\)**
+- **Forecast: Growth stops at step: \(33\); Step Number for next guaranteed multi-bit reduction: \(34 (8)\)...**
+    - Left Shift \((2x)\): Decimal Result:  \(350_{10}\) - Binary Result: \(101011110_2 \)
+    - Add \(X\): Decimal Result:  \(525_{10}\) - Binary Result: \(1000001101_2 \)
+    - Add \(1\): Decimal Result:  \(526_{10}\) - Binary Result: \(1000001110_2 \)
+- **Step \(28\): Decimal:  \(526_{10}\) = Binary: \(1000001110_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(34 (7)\)...**
+    - Step \(27\) Right Shift:  \(526_{10}\) - Binary Result: \(100000111_2 \)
+- **Step \(29\): Decimal:  \(263_{10}\) = Binary: \(100000111_2\)**
+- **Forecast: Growth stops at step: \(33\); Step Number for next guaranteed multi-bit reduction: \(34 (6)\)...**
+    - Left Shift \((2x)\): Decimal Result:  \(526_{10}\) - Binary Result: \(1000001110_2 \)
+    - Add \(X\): Decimal Result:  \(789_{10}\) - Binary Result: \(1100010101_2 \)
+    - Add \(1\): Decimal Result:  \(790_{10}\) - Binary Result: \(1100010110_2 \)
+- **Step \(30\): Decimal:  \(790_{10}\) = Binary: \(1100010110_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(34 (5)\)...**
+    - Step \(29\) Right Shift:  \(790_{10}\) - Binary Result: \(110001011_2 \)
+- **Step \(31\): Decimal:  \(395_{10}\) = Binary: \(110001011_2\)**
+- **Forecast: Growth stops at step: \(33\); Step Number for next guaranteed multi-bit reduction: \(34 (4)\)...**
+    - Left Shift \((2x)\): Decimal Result:  \(790_{10}\) - Binary Result: \(1100010110_2 \)
+    - Add \(X\): Decimal Result:  \(1185_{10}\) - Binary Result: \(10010100001_2 \)
+    - Add \(1\): Decimal Result:  \(1186_{10}\) - Binary Result: \(10010100010_2 \)
+- **Step \(32\): Decimal:  \(1186_{10}\) = Binary: \(10010100010_2\)**
+    - Step \(31\) Right Shift:  \(1186_{10}\) - Binary Result: \(1001010001_2 \)
+- **Step \(33\): Decimal:  \(593_{10}\) = Binary: \(1001010001_2\)**
+    - Left Shift \((2x)\): Decimal Result:  \(1186_{10}\) - Binary Result: \(10010100010_2 \)
+    - Add \(X\): Decimal Result:  \(1779_{10}\) - Binary Result: \(11011110011_2 \)
+    - Add \(1\): Decimal Result:  \(1780_{10}\) - Binary Result: \(11011110100_2 \)
+- **Step \(34\): Decimal:  \(1780_{10}\) = Binary: \(11011110100_2\)**
+    - Step \(33\) Right Shift:  \(1780_{10}\) - Binary Result: \(1101111010_2 \)
+- **Step \(35\): Decimal:  \(890_{10}\) = Binary: \(1101111010_2\)**
+    - Step \(34\) Right Shift:  \(890_{10}\) - Binary Result: \(110111101_2 \)
+- **Step \(36\): Decimal:  \(445_{10}\) = Binary: \(110111101_2\)**
+    - Left Shift \((2x)\): Decimal Result:  \(890_{10}\) - Binary Result: \(1101111010_2 \)
+    - Add \(X\): Decimal Result:  \(1335_{10}\) - Binary Result: \(10100110111_2 \)
+    - Add \(1\): Decimal Result:  \(1336_{10}\) - Binary Result: \(10100111000_2 \)
+- **Step \(37\): Decimal:  \(1336_{10}\) = Binary: \(10100111000_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(45 (9)\)...**
+    - Step \(36\) Right Shift:  \(1336_{10}\) - Binary Result: \(1010011100_2 \)
+- **Step \(38\): Decimal:  \(668_{10}\) = Binary: \(1010011100_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(45 (8)\)...**
+    - Step \(37\) Right Shift:  \(668_{10}\) - Binary Result: \(101001110_2 \)
+- **Step \(39\): Decimal:  \(334_{10}\) = Binary: \(101001110_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(45 (7)\)...**
+    - Step \(38\) Right Shift:  \(334_{10}\) - Binary Result: \(10100111_2 \)
+- **Step \(40\): Decimal:  \(167_{10}\) = Binary: \(10100111_2\)**
+- **Forecast: Growth stops at step: \(44\); Step Number for next guaranteed multi-bit reduction: \(45 (6)\)...**
+    - Left Shift \((2x)\): Decimal Result:  \(334_{10}\) - Binary Result: \(101001110_2 \)
+    - Add \(X\): Decimal Result:  \(501_{10}\) - Binary Result: \(111110101_2 \)
+    - Add \(1\): Decimal Result:  \(502_{10}\) - Binary Result: \(111110110_2 \)
+- **Step \(41\): Decimal:  \(502_{10}\) = Binary: \(111110110_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(45 (5)\)...**
+    - Step \(40\) Right Shift:  \(502_{10}\) - Binary Result: \(11111011_2 \)
+- **Step \(42\): Decimal:  \(251_{10}\) = Binary: \(11111011_2\)**
+- **Forecast: Growth stops at step: \(44\); Step Number for next guaranteed multi-bit reduction: \(45 (4)\)...**
+    - Left Shift \((2x)\): Decimal Result:  \(502_{10}\) - Binary Result: \(111110110_2 \)
+    - Add \(X\): Decimal Result:  \(753_{10}\) - Binary Result: \(1011110001_2 \)
+    - Add \(1\): Decimal Result:  \(754_{10}\) - Binary Result: \(1011110010_2 \)
+- **Step \(43\): Decimal:  \(754_{10}\) = Binary: \(1011110010_2\)**
+    - Step \(42\) Right Shift:  \(754_{10}\) - Binary Result: \(101111001_2 \)
+- **Step \(44\): Decimal:  \(377_{10}\) = Binary: \(101111001_2\)**
+    - Left Shift \((2x)\): Decimal Result:  \(754_{10}\) - Binary Result: \(1011110010_2 \)
+    - Add \(X\): Decimal Result:  \(1131_{10}\) - Binary Result: \(10001101011_2 \)
+    - Add \(1\): Decimal Result:  \(1132_{10}\) - Binary Result: \(10001101100_2 \)
+- **Step \(45\): Decimal:  \(1132_{10}\) = Binary: \(10001101100_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(50 (6)\)...**
+    - Step \(44\) Right Shift:  \(1132_{10}\) - Binary Result: \(1000110110_2 \)
+- **Step \(46\): Decimal:  \(566_{10}\) = Binary: \(1000110110_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(50 (5)\)...**
+    - Step \(45\) Right Shift:  \(566_{10}\) - Binary Result: \(100011011_2 \)
+- **Step \(47\): Decimal:  \(283_{10}\) = Binary: \(100011011_2\)**
+- **Forecast: Growth stops at step: \(49\); Step Number for next guaranteed multi-bit reduction: \(50 (4)\)...**
+    - Left Shift \((2x)\): Decimal Result:  \(566_{10}\) - Binary Result: \(1000110110_2 \)
+    - Add \(X\): Decimal Result:  \(849_{10}\) - Binary Result: \(1101010001_2 \)
+    - Add \(1\): Decimal Result:  \(850_{10}\) - Binary Result: \(1101010010_2 \)
+- **Step \(48\): Decimal:  \(850_{10}\) = Binary: \(1101010010_2\)**
+    - Step \(47\) Right Shift:  \(850_{10}\) - Binary Result: \(110101001_2 \)
+- **Step \(49\): Decimal:  \(425_{10}\) = Binary: \(110101001_2\)**
+    - Left Shift \((2x)\): Decimal Result:  \(850_{10}\) - Binary Result: \(1101010010_2 \)
+    - Add \(X\): Decimal Result:  \(1275_{10}\) - Binary Result: \(10011111011_2 \)
+    - Add \(1\): Decimal Result:  \(1276_{10}\) - Binary Result: \(10011111100_2 \)
+- **Step \(50\): Decimal:  \(1276_{10}\) = Binary: \(10011111100_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(63 (14)\)...**
+    - Step \(49\) Right Shift:  \(1276_{10}\) - Binary Result: \(1001111110_2 \)
+- **Step \(51\): Decimal:  \(638_{10}\) = Binary: \(1001111110_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(63 (13)\)...**
+    - Step \(50\) Right Shift:  \(638_{10}\) - Binary Result: \(100111111_2 \)
+- **Step \(52\): Decimal:  \(319_{10}\) = Binary: \(100111111_2\)**
+- **Forecast: Growth stops at step: \(62\); Step Number for next guaranteed multi-bit reduction: \(63 (12)\)...**
+    - Left Shift \((2x)\): Decimal Result:  \(638_{10}\) - Binary Result: \(1001111110_2 \)
+    - Add \(X\): Decimal Result:  \(957_{10}\) - Binary Result: \(1110111101_2 \)
+    - Add \(1\): Decimal Result:  \(958_{10}\) - Binary Result: \(1110111110_2 \)
+- **Step \(53\): Decimal:  \(958_{10}\) = Binary: \(1110111110_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(63 (11)\)...**
+    - Step \(52\) Right Shift:  \(958_{10}\) - Binary Result: \(111011111_2 \)
+- **Step \(54\): Decimal:  \(479_{10}\) = Binary: \(111011111_2\)**
+- **Forecast: Growth stops at step: \(62\); Step Number for next guaranteed multi-bit reduction: \(63 (10)\)...**
+    - Left Shift \((2x)\): Decimal Result:  \(958_{10}\) - Binary Result: \(1110111110_2 \)
+    - Add \(X\): Decimal Result:  \(1437_{10}\) - Binary Result: \(10110011101_2 \)
+    - Add \(1\): Decimal Result:  \(1438_{10}\) - Binary Result: \(10110011110_2 \)
+- **Step \(55\): Decimal:  \(1438_{10}\) = Binary: \(10110011110_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(63 (9)\)...**
+    - Step \(54\) Right Shift:  \(1438_{10}\) - Binary Result: \(1011001111_2 \)
+- **Step \(56\): Decimal:  \(719_{10}\) = Binary: \(1011001111_2\)**
+- **Forecast: Growth stops at step: \(62\); Step Number for next guaranteed multi-bit reduction: \(63 (8)\)...**
+    - Left Shift \((2x)\): Decimal Result:  \(1438_{10}\) - Binary Result: \(10110011110_2 \)
+    - Add \(X\): Decimal Result:  \(2157_{10}\) - Binary Result: \(100001101101_2 \)
+    - Add \(1\): Decimal Result:  \(2158_{10}\) - Binary Result: \(100001101110_2 \)
+- **Step \(57\): Decimal:  \(2158_{10}\) = Binary: \(100001101110_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(63 (7)\)...**
+    - Step \(56\) Right Shift:  \(2158_{10}\) - Binary Result: \(10000110111_2 \)
+- **Step \(58\): Decimal:  \(1079_{10}\) = Binary: \(10000110111_2\)**
+- **Forecast: Growth stops at step: \(62\); Step Number for next guaranteed multi-bit reduction: \(63 (6)\)...**
+    - Left Shift \((2x)\): Decimal Result:  \(2158_{10}\) - Binary Result: \(100001101110_2 \)
+    - Add \(X\): Decimal Result:  \(3237_{10}\) - Binary Result: \(110010100101_2 \)
+    - Add \(1\): Decimal Result:  \(3238_{10}\) - Binary Result: \(110010100110_2 \)
+- **Step \(59\): Decimal:  \(3238_{10}\) = Binary: \(110010100110_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(63 (5)\)...**
+    - Step \(58\) Right Shift:  \(3238_{10}\) - Binary Result: \(11001010011_2 \)
+- **Step \(60\): Decimal:  \(1619_{10}\) = Binary: \(11001010011_2\)**
+- **Forecast: Growth stops at step: \(62\); Step Number for next guaranteed multi-bit reduction: \(63 (4)\)...**
+    - Left Shift \((2x)\): Decimal Result:  \(3238_{10}\) - Binary Result: \(110010100110_2 \)
+    - Add \(X\): Decimal Result:  \(4857_{10}\) - Binary Result: \(1001011111001_2 \)
+    - Add \(1\): Decimal Result:  \(4858_{10}\) - Binary Result: \(1001011111010_2 \)
+- **Step \(61\): Decimal:  \(4858_{10}\) = Binary: \(1001011111010_2\)**
+    - Step \(60\) Right Shift:  \(4858_{10}\) - Binary Result: \(100101111101_2 \)
+- **Step \(62\): Decimal:  \(2429_{10}\) = Binary: \(100101111101_2\)**
+    - Left Shift \((2x)\): Decimal Result:  \(4858_{10}\) - Binary Result: \(1001011111010_2 \)
+    - Add \(X\): Decimal Result:  \(7287_{10}\) - Binary Result: \(1110001110111_2 \)
+    - Add \(1\): Decimal Result:  \(7288_{10}\) - Binary Result: \(1110001111000_2 \)
+- **Step \(63\): Decimal:  \(7288_{10}\) = Binary: \(1110001111000_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(73 (11)\)...**
+    - Step \(62\) Right Shift:  \(7288_{10}\) - Binary Result: \(111000111100_2 \)
+- **Step \(64\): Decimal:  \(3644_{10}\) = Binary: \(111000111100_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(73 (10)\)...**
+    - Step \(63\) Right Shift:  \(3644_{10}\) - Binary Result: \(11100011110_2 \)
+- **Step \(65\): Decimal:  \(1822_{10}\) = Binary: \(11100011110_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(73 (9)\)...**
+    - Step \(64\) Right Shift:  \(1822_{10}\) - Binary Result: \(1110001111_2 \)
+- **Step \(66\): Decimal:  \(911_{10}\) = Binary: \(1110001111_2\)**
+- **Forecast: Growth stops at step: \(72\); Step Number for next guaranteed multi-bit reduction: \(73 (8)\)...**
+    - Left Shift \((2x)\): Decimal Result:  \(1822_{10}\) - Binary Result: \(11100011110_2 \)
+    - Add \(X\): Decimal Result:  \(2733_{10}\) - Binary Result: \(101010101101_2 \)
+    - Add \(1\): Decimal Result:  \(2734_{10}\) - Binary Result: \(101010101110_2 \)
+- **Step \(67\): Decimal:  \(2734_{10}\) = Binary: \(101010101110_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(73 (7)\)...**
+    - Step \(66\) Right Shift:  \(2734_{10}\) - Binary Result: \(10101010111_2 \)
+- **Step \(68\): Decimal:  \(1367_{10}\) = Binary: \(10101010111_2\)**
+- **Forecast: Growth stops at step: \(72\); Step Number for next guaranteed multi-bit reduction: \(73 (6)\)...**
+    - Left Shift \((2x)\): Decimal Result:  \(2734_{10}\) - Binary Result: \(101010101110_2 \)
+    - Add \(X\): Decimal Result:  \(4101_{10}\) - Binary Result: \(1000000000101_2 \)
+    - Add \(1\): Decimal Result:  \(4102_{10}\) - Binary Result: \(1000000000110_2 \)
+- **Step \(69\): Decimal:  \(4102_{10}\) = Binary: \(1000000000110_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(73 (5)\)...**
+    - Step \(68\) Right Shift:  \(4102_{10}\) - Binary Result: \(100000000011_2 \)
+- **Step \(70\): Decimal:  \(2051_{10}\) = Binary: \(100000000011_2\)**
+- **Forecast: Growth stops at step: \(72\); Step Number for next guaranteed multi-bit reduction: \(73 (4)\)...**
+    - Left Shift \((2x)\): Decimal Result:  \(4102_{10}\) - Binary Result: \(1000000000110_2 \)
+    - Add \(X\): Decimal Result:  \(6153_{10}\) - Binary Result: \(1100000001001_2 \)
+    - Add \(1\): Decimal Result:  \(6154_{10}\) - Binary Result: \(1100000001010_2 \)
+- **Step \(71\): Decimal:  \(6154_{10}\) = Binary: \(1100000001010_2\)**
+    - Step \(70\) Right Shift:  \(6154_{10}\) - Binary Result: \(110000000101_2 \)
+- **Step \(72\): Decimal:  \(3077_{10}\) = Binary: \(110000000101_2\)**
+    - Left Shift \((2x)\): Decimal Result:  \(6154_{10}\) - Binary Result: \(1100000001010_2 \)
+    - Add \(X\): Decimal Result:  \(9231_{10}\) - Binary Result: \(10010000001111_2 \)
+    - Add \(1\): Decimal Result:  \(9232_{10}\) - Binary Result: \(10010000010000_2 \)
+- **Step \(73\): Decimal:  \(9232_{10}\) = Binary: \(10010000010000_2\)**
+    - Step \(72\) Right Shift:  \(9232_{10}\) - Binary Result: \(1001000001000_2 \)
+- **Step \(74\): Decimal:  \(4616_{10}\) = Binary: \(1001000001000_2\)**
+    - Step \(73\) Right Shift:  \(4616_{10}\) - Binary Result: \(100100000100_2 \)
+- **Step \(75\): Decimal:  \(2308_{10}\) = Binary: \(100100000100_2\)**
+    - Step \(74\) Right Shift:  \(2308_{10}\) - Binary Result: \(10010000010_2 \)
+- **Step \(76\): Decimal:  \(1154_{10}\) = Binary: \(10010000010_2\)**
+    - Step \(75\) Right Shift:  \(1154_{10}\) - Binary Result: \(1001000001_2 \)
+- **Step \(77\): Decimal:  \(577_{10}\) = Binary: \(1001000001_2\)**
+    - Left Shift \((2x)\): Decimal Result:  \(1154_{10}\) - Binary Result: \(10010000010_2 \)
+    - Add \(X\): Decimal Result:  \(1731_{10}\) - Binary Result: \(11011000011_2 \)
+    - Add \(1\): Decimal Result:  \(1732_{10}\) - Binary Result: \(11011000100_2 \)
+- **Step \(78\): Decimal:  \(1732_{10}\) = Binary: \(11011000100_2\)**
+    - Step \(77\) Right Shift:  \(1732_{10}\) - Binary Result: \(1101100010_2 \)
+- **Step \(79\): Decimal:  \(866_{10}\) = Binary: \(1101100010_2\)**
+    - Step \(78\) Right Shift:  \(866_{10}\) - Binary Result: \(110110001_2 \)
+- **Step \(80\): Decimal:  \(433_{10}\) = Binary: \(110110001_2\)**
+    - Left Shift \((2x)\): Decimal Result:  \(866_{10}\) - Binary Result: \(1101100010_2 \)
+    - Add \(X\): Decimal Result:  \(1299_{10}\) - Binary Result: \(10100010011_2 \)
+    - Add \(1\): Decimal Result:  \(1300_{10}\) - Binary Result: \(10100010100_2 \)
+- **Step \(81\): Decimal:  \(1300_{10}\) = Binary: \(10100010100_2\)**
+    - Step \(80\) Right Shift:  \(1300_{10}\) - Binary Result: \(1010001010_2 \)
+- **Step \(82\): Decimal:  \(650_{10}\) = Binary: \(1010001010_2\)**
+    - Step \(81\) Right Shift:  \(650_{10}\) - Binary Result: \(101000101_2 \)
+- **Step \(83\): Decimal:  \(325_{10}\) = Binary: \(101000101_2\)**
+    - Left Shift \((2x)\): Decimal Result:  \(650_{10}\) - Binary Result: \(1010001010_2 \)
+    - Add \(X\): Decimal Result:  \(975_{10}\) - Binary Result: \(1111001111_2 \)
+    - Add \(1\): Decimal Result:  \(976_{10}\) - Binary Result: \(1111010000_2 \)
+- **Step \(84\): Decimal:  \(976_{10}\) = Binary: \(1111010000_2\)**
+    - Step \(83\) Right Shift:  \(976_{10}\) - Binary Result: \(111101000_2 \)
+- **Step \(85\): Decimal:  \(488_{10}\) = Binary: \(111101000_2\)**
+    - Step \(84\) Right Shift:  \(488_{10}\) - Binary Result: \(11110100_2 \)
+- **Step \(86\): Decimal:  \(244_{10}\) = Binary: \(11110100_2\)**
+    - Step \(85\) Right Shift:  \(244_{10}\) - Binary Result: \(1111010_2 \)
+- **Step \(87\): Decimal:  \(122_{10}\) = Binary: \(1111010_2\)**
+    - Step \(86\) Right Shift:  \(122_{10}\) - Binary Result: \(111101_2 \)
+- **Step \(88\): Decimal:  \(61_{10}\) = Binary: \(111101_2\)**
+    - Left Shift \((2x)\): Decimal Result:  \(122_{10}\) - Binary Result: \(1111010_2 \)
+    - Add \(X\): Decimal Result:  \(183_{10}\) - Binary Result: \(10110111_2 \)
+    - Add \(1\): Decimal Result:  \(184_{10}\) - Binary Result: \(10111000_2 \)
+- **Step \(89\): Decimal:  \(184_{10}\) = Binary: \(10111000_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(97 (9)\)...**
+    - Step \(88\) Right Shift:  \(184_{10}\) - Binary Result: \(1011100_2 \)
+- **Step \(90\): Decimal:  \(92_{10}\) = Binary: \(1011100_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(97 (8)\)...**
+    - Step \(89\) Right Shift:  \(92_{10}\) - Binary Result: \(101110_2 \)
+- **Step \(91\): Decimal:  \(46_{10}\) = Binary: \(101110_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(97 (7)\)...**
+    - Step \(90\) Right Shift:  \(46_{10}\) - Binary Result: \(10111_2 \)
+- **Step \(92\): Decimal:  \(23_{10}\) = Binary: \(10111_2\)**
+- **Forecast: Growth stops at step: \(96\); Step Number for next guaranteed multi-bit reduction: \(97 (6)\)...**
+    - Left Shift \((2x)\): Decimal Result:  \(46_{10}\) - Binary Result: \(101110_2 \)
+    - Add \(X\): Decimal Result:  \(69_{10}\) - Binary Result: \(1000101_2 \)
+    - Add \(1\): Decimal Result:  \(70_{10}\) - Binary Result: \(1000110_2 \)
+- **Step \(93\): Decimal:  \(70_{10}\) = Binary: \(1000110_2\)**
+**Forecast: Step Number for next guaranteed multi-bit reduction: \(97 (5)\)...**
+    - Step \(92\) Right Shift:  \(70_{10}\) - Binary Result: \(100011_2 \)
+- **Step \(94\): Decimal:  \(35_{10}\) = Binary: \(100011_2\)**
+- **Forecast: Growth stops at step: \(96\); Step Number for next guaranteed multi-bit reduction: \(97 (4)\)...**
+    - Left Shift \((2x)\): Decimal Result:  \(70_{10}\) - Binary Result: \(1000110_2 \)
+    - Add \(X\): Decimal Result:  \(105_{10}\) - Binary Result: \(1101001_2 \)
+    - Add \(1\): Decimal Result:  \(106_{10}\) - Binary Result: \(1101010_2 \)
+- **Step \(95\): Decimal:  \(106_{10}\) = Binary: \(1101010_2\)**
+    - Step \(94\) Right Shift:  \(106_{10}\) - Binary Result: \(110101_2 \)
+- **Step \(96\): Decimal:  \(53_{10}\) = Binary: \(110101_2\)**
+    - Left Shift \((2x)\): Decimal Result:  \(106_{10}\) - Binary Result: \(1101010_2 \)
+    - Add \(X\): Decimal Result:  \(159_{10}\) - Binary Result: \(10011111_2 \)
+    - Add \(1\): Decimal Result:  \(160_{10}\) - Binary Result: \(10100000_2 \)
+- **Step \(97\): Decimal:  \(160_{10}\) = Binary: \(10100000_2\)**
+    - Step \(96\) Right Shift:  \(160_{10}\) - Binary Result: \(1010000_2 \)
+- **Step \(98\): Decimal:  \(80_{10}\) = Binary: \(1010000_2\)**
+    - Step \(97\) Right Shift:  \(80_{10}\) - Binary Result: \(101000_2 \)
+- **Step \(99\): Decimal:  \(40_{10}\) = Binary: \(101000_2\)**
+    - Step \(98\) Right Shift:  \(40_{10}\) - Binary Result: \(10100_2 \)
+- **Step \(100\): Decimal:  \(20_{10}\) = Binary: \(10100_2\)**
+    - Step \(99\) Right Shift:  \(20_{10}\) - Binary Result: \(1010_2 \)
+- **Step \(101\): Decimal:  \(10_{10}\) = Binary: \(1010_2\)**
+    - Step \(100\) Right Shift:  \(10_{10}\) - Binary Result: \(101_2 \)
+- **Step \(102\): Decimal:  \(5_{10}\) = Binary: \(101_2\)**
+    - Left Shift \((2x)\): Decimal Result:  \(10_{10}\) - Binary Result: \(1010_2 \)
+    - Add \(X\): Decimal Result:  \(15_{10}\) - Binary Result: \(1111_2 \)
+    - Add \(1\): Decimal Result:  \(16_{10}\) - Binary Result: \(10000_2 \)
+- **Step \(103\): Decimal:  \(16_{10}\) = Binary: \(10000_2\)**
+    - Step \(102\) Right Shift:  \(16_{10}\) - Binary Result: \(1000_2 \)
+- **Step \(104\): Decimal:  \(8_{10}\) = Binary: \(1000_2\)**
+    - Step \(103\) Right Shift:  \(8_{10}\) - Binary Result: \(100_2 \)
+- **Step \(105\): Decimal:  \(4_{10}\) = Binary: \(100_2\)**
+    - Step \(104\) Right Shift:  \(4_{10}\) - Binary Result: \(10_2 \)
+- **Step \(106\): Decimal:  \(2_{10}\) = Binary: \(10_2\)**
+    - Step \(105\) Right Shift:  \(2_{10}\) - Binary Result: \(1_2 \)
+
+
+## D.2 State Graph Traversal of 31
+--------------------------------------------
+Directed Graph Traversals For 31
+--------------------------------------------
+Step \(1\) Result: Even (\(0\))$94$,Step \(2\) Result: Even (\(0\))$47$,Step \(3\) Result: Odd (\(1\))$42$,Step \(4\) Result: Even (\(0\))$71$,Step \(5\) Result: Even (\(2\))$14$,Step \(6\) Result: Odd (\(1\))$07$,Step \(7\) Result: Odd (\(3\))$22$,Step \(8\) Result: Odd (\(1\))$61$,Step \(9\) Result: Even (\(4\))$84$,Step \(10\) Result: Even (\(2\))$42$,Step \(11\) Result: Odd (\(1\))$21$,Step \(12\) Result: Odd (\(3\))$64$,Step \(13\) Result: Odd (\(1\))$82$,Step \(14\) Result: Even (\(0\))$91$,Step \(15\) Result: Even (\(2\))$74$,Step \(16\) Result: Odd (\(1\))$37$,Step \(17\) Result: Even (\(4\))$12$,Step \(18\) Result: Even (\(2\))$06$,Step \(19\) Result: Odd (\(1\))$03$,Step \(20\) Result: Odd (\(3\))$10$,Step \(21\) Result: Odd (\(1\))$55$,Step \(22\) Result: Even (\(4\))$66$,Step \(23\) Result: Even (\(2\))$33$,Step \(24\) Result: Odd (\(7\))$00$,Step \(25\) Result: Odd (\(3\))$50$,Step \(26\) Result: Odd (\(1\))$75$,Step \(27\) Result: Odd (\(5\))$26$,Step \(28\) Result: Even (\(2\))$63$,Step \(29\) Result: Odd (\(7\))$90$,Step \(30\) Result: Odd (\(3\))$95$,Step \(31\) Result: Odd (\(1\))$86$,Step \(32\) Result: Odd (\(5\))$93$,Step \(33\) Result: Odd (\(7\))$80$,Step \(34\) Result: Even (\(8\))$90$,Step \(35\) Result: Even (\(4\))$45$,Step \(36\) Result: Odd (\(3\))$36$,Step \(37\) Result: Even (\(6\))$68$,Step \(38\) Result: Odd (\(3\))$34$,Step \(39\) Result: Odd (\(1\))$67$,Step \(40\) Result: Odd (\(5\))$02$,Step \(41\) Result: Even (\(2\))$51$,Step \(42\) Result: Odd (\(7\))$54$,Step \(43\) Result: Odd (\(3\))$77$,Step \(44\) Result: Odd (\(1\))$32$,Step \(45\) Result: Odd (\(5\))$66$,Step \(46\) Result: Even (\(2\))$83$,Step \(47\) Result: Even (\(8\))$50$,Step \(48\) Result: Even (\(4\))$25$,Step \(49\) Result: Even (\(2\))$76$,Step \(50\) Result: Even (\(6\))$38$,Step \(51\) Result: Odd (\(3\))$19$,Step \(52\) Result: Odd (\(9\))$58$,Step \(53\) Result: Even (\(4\))$79$,Step \(54\) Result: Even (\(4\))$38$,Step \(55\) Result: Odd (\(7\))$19$,Step \(56\) Result: Odd (\(1\))$58$,Step \(57\) Result: Even (\(0\))$79$,Step \(58\) Result: Even (\(2\))$38$,Step \(59\) Result: Even (\(6\))$19$,Step \(60\) Result: Even (\(8\))$58$,Step \(61\) Result: Even (\(4\))$29$,Step \(62\) Result: Even (\(2\))$88$,Step \(63\) Result: Even (\(6\))$44$,Step \(64\) Result: Even (\(8\))$22$,Step \(65\) Result: Odd (\(9\))$11$,Step \(66\) Result: Odd (\(7\))$34$,Step \(67\) Result: Odd (\(3\))$67$,Step \(68\) Result: Odd (\(1\))$02$,Step \(69\) Result: Even (\(0\))$51$,Step \(70\) Result: Odd (\(1\))$54$,Step \(71\) Result: Even (\(0\))$77$,Step \(72\) Result: Even (\(2\))$32$,Step \(73\) Result: Even (\(6\))$16$,Step \(74\) Result: Odd (\(3\))$08$,Step \(75\) Result: Odd (\(1\))$54$,Step \(76\) Result: Odd (\(5\))$77$,Step \(77\) Result: Odd (\(7\))$32$,Step \(78\) Result: Even (\(8\))$66$,Step \(79\) Result: Even (\(4\))$33$,Step \(80\) Result: Odd (\(3\))$00$,Step \(81\) Result: Even (\(6\))$50$,Step \(82\) Result: Odd (\(3\))$25$,Step \(83\) Result: Odd (\(9\))$76$,Step \(84\) Result: Even (\(4\))$88$,Step \(85\) Result: Even (\(2\))$44$,Step \(86\) Result: Odd (\(1\))$22$,Step \(87\) Result: Even (\(0\))$61$,Step \(88\) Result: Odd (\(1\))$84$,Step \(89\) Result: Even (\(0\))$92$,Step \(90\) Result: Even (\(0\))$46$,Step \(91\) Result: Even (\(0\))$23$,Step \(92\) Result: Even (\(0\))$70$,Step \(93\) Result: Even (\(0\))$35$,Step \(94\) Result: Odd (\(1\))$06$,Step \(95\) Result: Even (\(0\))$53$,Step \(96\) Result: Odd (\(1\))$60$,Step \(97\) Result: Even (\(0\))$80$,Step \(98\) Result: Even (\(0\))$40$,Step \(99\) Result: Even (\(0\))$20$,Step \(100\) Result: Even (\(0\))$10$,Step \(101\) Result: Even (\(0\))$05$,Step \(102\) Result: Even (\(0\))$16$,Step \(103\) Result: Even (\(0\))$08$,Step \(104\) Result: Even (\(0\))$04$,Step \(105\) Result: Even (\(0\))$02$,Step \(106\) Result: Even (\(0\))$01$
