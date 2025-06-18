@@ -484,11 +484,47 @@ $$
 
 ---
 
+#### **6.3 Effects on binary structure**  
+
+This carry propagation produces predicatible behavior for how long a sequence of trailing 1s will take until a 0 is introduced into the bit 1 position and the representation has at least two trailing 0s. Consider some binary number with $N$ trailing 1s
+   \[
+   T^{(k)}(X) = 1...1\underbrace{11\ldots1}_{N}.
+   \tag{6.3}
+   \]
+
+This can be representated by 
+\[
+X = a \cdot 2^N + (2^N - 1), \quad \text{for some } a \in \mathbb{N}. \tag{6.4}
+\]
+with any $2^n-1$ value having $a$ of $0$
+
+with $T^{(k)}(X)$ representing the $k$-th step through the collatz 
+function. Processing the odd operation will result in a carry that will travel up the higher bits until it reaches the highest bit of the trailing 1s, at which point it will flip that value to a 0 and carry to the next position 
+ **Base Case (\( k = 1 \))**:  
+ Let $p$ be the position of the introduced $0$ in the higher bits
+   \[
+   T^{(1)}(X) = 10_p\underbrace{11\ldots1}_{N-1}0.
+   \tag{6.5}
+   \]
+The follow up even step that is guaranteed will then shift right
+\[
+   T^{(2)}(X) = 10_{p-1}\underbrace{11\ldots1}_{N-1}.
+   \tag{6.6}
+\]
+This process will continue alternating between odd and even step until the number has the form
+\[
+T^{(2N-1)}(X) = \underbrace{1}_{\text{MSB}}\dots\underbrace{b_{N-1}b_{N-2}\ldots b_3b_2}_{\text{1s and 0s}}\underbrace{0_10_0}_{\text{ two trailing zeros}}.
+\tag{6.7}
+\]
+The state of the higher order bits is less easily predicted and it based on the number of trailing 1s to determine, but the number of steps until a trailing sequence of at least two 0s is predictable
+
+
 ### Section 7: Rigorous Bit-Length Bounds in Collatz Sequences
 
 ---
 
 #### 7.1 Definitions and Notation  
+
 Let \( i \in \mathbb{N}^+ \) be the initial input to the Collatz function. For a positive integer \( X \), the **bit-length** \( b(X) \) is defined as:
 \[
 b(X) = \lfloor \log_2 X \rfloor + 1. \tag{7.1}
