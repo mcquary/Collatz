@@ -382,14 +382,13 @@ f(n) =
 \end{cases}
 \tag{4.6}
 $$  
-This formulation encapsulates the periodicity modulo 8 and the recursive behavior for multiples of 16, establishing $ f(n) $ as a rigorous extension of the 2-adic valuation [1].
+This formulation encapsulates the periodicity modulo 8 and the recursive behavior for multiples of 16, establishing $ f(n) $ as a rigorous extension of the 2-adic valuation.
 
+### Section 5: Net Bit Gain in Collatz Step Pairs
 
-### Section 5: Net Bit Gain in Collatz Sequences
-
-#### 5.1 Theorem: Net Bit Gain for Odd/Even Sequences  
+#### 5.1 Theorem: Net Bit Gain for Pairing of Step Sequences  
 **Theorem 5.1:**  
-Let $ n \in \mathbb{N} $ undergo $ k $ steps in the Collatz function. Define the net bit gain $ \Delta b $ as the difference between the bit length $ b(n) $ and the bit length of the result after $ k $ steps. For any sequence of odd/even steps:  
+Let $ n \in \mathbb{N} $ undergo $ 2 $ steps in the Collatz function. Define the net bit gain $ \Delta b $ as the difference between the bit length $ b(n) $ and the bit length of the result after $ 2 $ steps. For any sequence of odd/even steps:  
 1. $ \Delta b \leq 1 $.  
 2. A sequence of two consecutive even steps results in $ \Delta b = -2 $.  
 
@@ -414,7 +413,7 @@ $$
 $$  
 where $ k $ is the number of steps. This is trivially $ \leq 1 $.  
 
-Thus, the **maximum net bit gain** over any sequence of steps is **1**, achieved when an odd step is followed by exactly one even step.  
+Thus, the **maximum net bit gain** over any pair of steps is **1**, achieved when an odd step is followed by exactly one even step.  
 
 ---
 
@@ -441,16 +440,11 @@ N = 8 \mapsto 4 \mapsto 2 \quad \text{with} \quad b(N) = 4 \mapsto 3 \mapsto 2. 
 $$  
 The net loss after two even steps is $ \Delta b = -2 $.  
 
-This linear loss ensures that sequences cannot grow indefinitely, as even steps dominate long-term behavior [1].  
-
 ---
 
 #### 5.4 Theoretical Bound on Net Bit Gain  
 **Corollary 5.1 (Maximum Bit Gain):**  
-The phrase "maximum bit gain of 1" reflects the **net** effect of an odd step followed by an even step. While the intermediate step $ n \mapsto 3n + 1 $ introduces logarithmic growth, the subsequent division by 2 bounds the net gain to at most 1 bit. For sequences of two or more consecutive even steps, the net bit loss accelerates, ensuring convergence [1].  
-
-This dichotomy between logarithmic growth (odd steps) and linear decay (even steps) underpins the Collatz conjecture's hypothesized termination at 1 [3].
-
+The phrase "maximum bit gain of 1" reflects the **net** effect of an odd step followed by an even step. While the intermediate step $ n \mapsto 3n + 1 $ introduces logarithmic growth, the subsequent division by 2 bounds the net gain to at most 1 bit. For sequences of two or more consecutive even steps, the net bit loss accelerates.
 
 ### **6. Carry Propagation in the $3x + 1$ Operation**
 
