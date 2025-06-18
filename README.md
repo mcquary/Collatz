@@ -484,32 +484,87 @@ $$
 
 ---
 
-#### **6.3 Uniqueness of $3x + 1$ Compared to Alternatives**  
-The operation $3x + 1$ exhibits a unique property absent in alternatives like $5x + 1$ or $7x + 1$. Consider $x = 5$:  
-- $3x + 1 = 16$ (binary $10000$) → carry propagates all trailing `1`s.  
-- $5x + 1 = 26$ (binary $11010$) → carry stops at the first `0`.  
+#### **6.3 Effects on binary structure**  
 
-Similarly, for $x = 7$:  
-- $3x + 1 = 22$ (binary $10110$) → carry propagates two trailing `1`s.  
-- $7x + 1 = 50$ (binary $110010$) → carry stops at the first `0`.  
+This carry propagation produces predicatible behavior for how long a sequence of trailing 1s will take until a 0 is introduced into the bit 1 position and the representation has at least two trailing 0s. Consider some binary number with $N$ trailing 1s
+   \[
+   T^{(k)}(X) = 1...1\underbrace{11\ldots1}_{N}.
+   \tag{6.3}
+   \]
 
-**Theorem 6.2.** The operation $3x + 1$ guarantees carry propagation through all trailing `1`s for any odd $x$, while operations like $5x + 1$ or $7x + 1$ do not.  
+This can be representated by 
+\[
+X = a \cdot 2^N + (2^N - 1), \quad \text{for some } a \in \mathbb{N}. \tag{6.4}
+\]
+with any $2^n-1$ value having $a$ of $0$
 
-*Proof.* The decomposition $3x = x \ll 1 + x$ ensures trailing `1`s in $3x$, enabling carry propagation upon addition of 1. For $5x = x \ll 2 + x$ and $7x = x \ll 3 - x$, the structure of the binary representation does not systematically produce trailing `1`s, halting carry propagation [1]. 
+with $T^{(k)}(X)$ representing the $k$-th step through the collatz 
+function. Processing the odd operation will result in a carry that will travel up the higher bits until it reaches the highest bit of the trailing 1s, at which point it will flip that value to a 0 and carry to the next position 
+ **Base Case (\( k = 1 \))**:  
+ Let $p$ be the position of the introduced $0$ in the higher bits
+   \[
+   T^{(1)}(X) = 10_p\underbrace{11\ldots1}_{N-1}0.
+   \tag{6.5}
+   \]
+The follow up even step that is guaranteed will then shift right
+\[
+   T^{(2)}(X) = 10_{p-1}\underbrace{11\ldots1}_{N-1}.
+   \tag{6.6}
+\]
+This process will continue alternating between odd and even step until the number has the form
+\[
+T^{(2N-1)}(X) = \underbrace{1}_{\text{MSB}}\dots\underbrace{b_{N-1}b_{N-2}\ldots b_3b_2}_{\text{1s and 0s}}\underbrace{0_10_0}_{\text{ two trailing zeros}}.
+\tag{6.7}
+\]
+The state of the higher order bits is less easily predicted and it based on the number of trailing 1s to determine, but the number of steps until a trailing sequence of at least two 0s is predictable
+
+Examples using 2 trailing 1s
+
+$X = a \cdot 2^N + (2^N - 1), \quad \text{for some } a \in \mathbb{N}.$
+
+Where $N=2$
+
+#### **Example 6.3.1: Case $ a = 0 $ (Binary $ 11_2 $)**  
+Let $ X = 3 $ (binary $ 11_2 $), so $ N = 2 $. Compute $ T^{(3)}(X) $:  
+1. $ T^{(1)}(3) = 3 \cdot 3 + 1 = 10 $ (binary $ 1010_2 $).  
+2. $ T^{(2)}(10) = \frac{10}{2} = 5 $ (binary $ 101_2 $).  
+3. $ T^{(3)}(5) = 3 \cdot 5 + 1 = 16 $ (binary $ 10000_2 $).  
+
+The binary representation of $ T^{(3)}(3) = 16 $ ends with **four consecutive zeros**. (Equation 7.2)  
 
 ---
 
-#### **6.4 Formal Statement of Carry Propagation**  
-For any odd integer $x$ with binary representation $x = b_k b_{k-1} \ldots b_1 1$, the operation $3x + 1$ results in a number with at least one trailing `0`. This ensures evenness and permits division by 2 in subsequent steps of the Collatz process. -
+#### **Example 6.3.2: Binary $ 1101011_2 $**  
+Let $ X = 107 $ (binary $ 1101011_2 $), which ends with $ N = 2 $ consecutive 1s. Compute $ T^{(3)}(X) $:  
+1. $ T^{(1)}(107) = 3 \cdot 107 + 1 = 322 $ (binary $ 101000010_2 $).  
+2. $ T^{(2)}(322) = \frac{322}{2} = 161 $ (binary $ 10100001_2 $).  
+3. $ T^{(3)}(161) = 3 \cdot 161 + 1 = 484 $ (binary $ 111100100_2 $).  
+
+The binary representation of $ T^{(3)}(107) = 484 $ ends with **two consecutive zeros**. (Equation 7.3)  
+
+---
+
+#### **Example 6.3.3: Binary $ 100011_2 $**  
+Let $ X = 35 $ (binary $ 100011_2 $), which ends with $ N = 2 $ consecutive 1s. Compute $ T^{(3)}(X) $:  
+1. $ T^{(1)}(35) = 3 \cdot 35 + 1 = 106 $ (binary $ 1101010_2 $).  
+2. $ T^{(2)}(106) = \frac{106}{2} = 53 $ (binary $ 110101_2 $).  
+3. $ T^{(3)}(53) = 3 \cdot 53 + 1 = 160 $ (binary $ 10100000_2 $).  
+
+The binary representation of $ T^{(3)}(35) = 160 $ ends with **six consecutive zeros**. (Equation 7.4)  
+
+---
+
+From the examples you can see you will have at least 2 trailing 0s, but could have more.
 
 ### Section 7: Rigorous Bit-Length Bounds in Collatz Sequences
 
 ---
 
 #### 7.1 Definitions and Notation  
-From Theoem 2.1: a positive integer \( X \), the **bit-length** \( b(X) \) is defined as:
+
+Let \( i \in \mathbb{N}^+ \) be the initial input to the Collatz function. For a positive integer \( X \), the **bit-length** \( b(X) \) is defined as:
 \[
-b(X) = \lfloor \log_2 X \rfloor + 1.
+b(X) = \lfloor \log_2 X \rfloor + 1. \tag{7.1}
 \]
 The **2-adic valuation** \( v_2(X) \) is the largest integer \( a \) such that \( 2^a \mid X \). A number \( X \) with \( N \in \mathbb{N}^+ \) trailing 1s in its binary representation satisfies:
 \[
@@ -627,70 +682,7 @@ b(Z) \leq 2b(X) + 1 - a. \tag{7.7}
   \]
   Actual \( b(Z) = 4 \leq 5 \).
 
-
-## 7.6 - Largest Possible Sequence of 1s after Initial set.
-
-### Theorem 7.6.1:
-For an odd integer \( N \), let \( t(N) \) denote the length of the longest sequence of trailing `1`s in its binary representation. Then, \( t(N) \) is the largest integer \( k \) such that:
-\[
-N \equiv 2^k - 1 \pmod{2^{k+1}} \tag{7.15}
-\]
-### Proof:
-#### Step 1: Binary Representation and Trailing `1`s
-Consider an odd integer \( N \). The binary representation of \( N \) can be written as:
-\[
-N = b_m b_{m-1} \ldots b_2 b_1 b_0 \tag{7.16}
-\]
-where \( b_i \in \{0, 1\} \) and \( b_0 = 1 \) (since \( N \) is odd).
-Let \( t(N) \) be the number of trailing `1`s in the binary representation of \( N \). This means:
-\[
-N = b_m b_{m-1} \ldots b_{t+1} 1 1 \ldots 1_2  \tag{7.17}
-\]
-where there are exactly \( t(N) \) trailing `1`s.
-#### Step 2: Modular Arithmetic and Trailing `1`s
-We need to show that \( t(N) \) is the largest integer \( k \) such that:
-\[
-N \equiv 2^k - 1 \pmod{2^{k+1}}  \tag{7.18}
-\]
-##### Forward Direction:
-Assume \( N \) has exactly \( t(N) \) trailing `1`s. Then, we can write:
-\[
-N = m \cdot 2^{t(N) + 1} + (2^{t(N)} - 1)  \tag{7.19}
-\]
-for some integer \( m \). This is because the binary representation of \( N \) ends with \( t(N) \) `1`s followed by a `0` or higher bits.
-Taking modulo \( 2^{t(N) + 1} \):
-\[
-N \equiv 2^{t(N)} - 1 \pmod{2^{t(N) + 1}}  \tag{7.20}
-\]
-This shows that if \( N \) has exactly \( t(N) \) trailing `1`s, then:
-\[
-N \equiv 2^{t(N)} - 1 \pmod{2^{t(N) + 1}}  \tag{7.21}
-\]
-##### Backward Direction:
-Assume \( N \equiv 2^k - 1 \pmod{2^{k+1}} \). We need to show that the binary representation of \( N \) has exactly \( k \) trailing `1`s.
-Since \( N \equiv 2^k - 1 \pmod{2^{k+1}} \), we can write:
-\[
-N = m \cdot 2^{k+1} + (2^k - 1)  \tag{7.22}
-\]
-for some integer \( m \). The term \( 2^k - 1 \) in binary is represented as a sequence of \( k \) `1`s. Therefore, the last \( k \) bits of \( N \) are all `1`s.
-To ensure that \( k \) is the largest such integer, we need to show that \( N \not\equiv 2^{k+1} - 1 \pmod{2^{k+2}} \). If \( N \equiv 2^{k+1} - 1 \pmod{2^{k+2}} \), then:
-\[
-N = m' \cdot 2^{k+2} + (2^{k+1} - 1)  \tag{7.23}
-\]
-for some integer \( m' \). This would imply that the last \( k+1 \) bits of \( N \) are all `1`s, contradicting the assumption that \( k \) is the largest such integer.
-Therefore, \( k \) must be the exact number of trailing `1`s in the binary representation of \( N \).
-### Conclusion:
-The length \( t(N) \) of the longest sequence of trailing `1`s in the binary representation of an odd integer \( N \) is the largest integer \( k \) such that:
-\[
-N \equiv 2^k - 1 \pmod{2^{k+1}}  \tag{7.24}
-\]
-This completes the proof. 
-### Algorithmic Implementation (for clarity):
-To find \( t(N) \) algorithmically, we can use the following steps:
-1. Start with \( k = \lfloor \log_2(N) \rfloor \).
-2. Check if \( N \equiv 2^k - 1 \pmod{2^{k+1}} \).
-3. If true, return \( k \). Otherwise, decrement \( k \) and repeat step 2.
-This method ensures that we find the largest \( k \) efficiently by starting from the highest possible value and working downwards.
+---
 
 
 
@@ -790,20 +782,20 @@ The bit length of \(X\) satisfies:
 
 ### 9.3 Decomposition of \(X\)
 
-Any integer \(X\) after \(2N - 1 - a\) steps can be decomposed as:
+Any integer \(X\) after \(2N - 1\) steps can be decomposed as:
 \[
-X = m \cdot 2^a, \quad \text{where } m \text{ is odd}. \tag{9.2}
+X = m \cdot 2^a, \quad \text{where } m \text{ is odd}.
 \]
 The bit length of \(m\) satisfies:
 \[
-\ell_m \leq 2b(x) + 1 - a. \tag{9.3}
+\ell_m \leq 2b(x) + 1 - a. \tag{9.2}
 \]
 
 ### 9.4 Maximum Value of \(m\)
 
 The largest odd integer with bit length \(\leq 2b(x) + 1 - a\) is:
 \[
-m \leq 2^{2b(x) + 1 - a} - 1. \tag{9.4}
+m \leq 2^{2b(x) + 1 - a} - 1. \tag{9.3}
 \]
 
 ### 9.5 Scaling Factor Analysis
@@ -813,142 +805,167 @@ To transition from bit length \(2b(x) + 1\) to \(3b(x)\), the number \(X\) must 
 \frac{N_{\text{min}}^{(3B)}}{N_{\text{min}}^{(2B)}} = 2^B. \tag{9.4}
 \]
 
-### 9.6 Inequality Derivation
 
-To show that no number other than 1 can reach a bit length of \(3b(x)\), we need to derive the inequality for the Collatz function. For an odd number \(x\), the Collatz function is:
+## 9.6 - Largest Possible Sequence of 1s after Initial set.
+
+### Theorem 9.6.1:
+For an odd integer \( N \), let \( t(N) \) denote the length of the longest sequence of trailing `1`s in its binary representation. Then, \( t(N) \) is the largest integer \( k \) such that:
 \[
-C(x) = \frac{3x + 1}{2}. \tag{9.5}
+N \equiv 2^k - 1 \pmod{2^{k+1}} \tag{9.5}
 \]
-Substitute \(X = 2^{2b(x) + 1 - a} - 1\) into the inequality:
+### Proof:
+#### Step 1: Binary Representation and Trailing `1`s
+Consider an odd integer \( N \). The binary representation of \( N \) can be written as:
 \[
-C(X) = C(2^{2b(x) + 1 - a} - 1). \tag{9.6}
+N = b_m b_{m-1} \ldots b_2 b_1 b_0 \tag{9.6}
 \]
-
-### 9.7 Simplifying the Inequality
-
-We need to show that:
+where \( b_i \in \{0, 1\} \) and \( b_0 = 1 \) (since \( N \) is odd).
+Let \( t(N) \) be the number of trailing `1`s in the binary representation of \( N \). This means:
 \[
-C(2^{2b(x) + 1 - a} - 1) \geq (2^{2b(x) + 1 - a} - 1) \cdot 2^{b(x)}. \tag{9.7}
+N = b_m b_{m-1} \ldots b_{t+1} 1 1 \ldots 1_2  \tag{9.7}
 \]
-
-#### Left-Hand Side (LHS):
+where there are exactly \( t(N) \) trailing `1`s.
+#### Step 2: Modular Arithmetic and Trailing `1`s
+We need to show that \( t(N) \) is the largest integer \( k \) such that:
 \[
-C(2^{2b(x) + 1 - a} - 1) = \frac{3(2^{2b(x) + 1 - a} - 1) + 1}{2}.
+N \equiv 2^k - 1 \pmod{2^{k+1}}  \tag{9.8}
 \]
-Simplify:
+##### Forward Direction:
+Assume \( N \) has exactly \( t(N) \) trailing `1`s. Then, we can write:
 \[
-\frac{3 \cdot 2^{2b(x) + 1 - a} - 3 + 1}{2} = \frac{3 \cdot 2^{2b(x) + 1 - a} - 2}{2} = \frac{3}{2} \cdot 2^{2b(x) + 1 - a} - 1. \tag{9.8}
+N = m \cdot 2^{t(N) + 1} + (2^{t(N)} - 1)  \tag{9.9}
 \]
-
-#### Right-Hand Side (RHS):
+for some integer \( m \). This is because the binary representation of \( N \) ends with \( t(N) \) `1`s followed by a `0` or higher bits.
+Taking modulo \( 2^{t(N) + 1} \):
 \[
-(2^{2b(x) + 1 - a} - 1) \cdot 2^{b(x)} = 2^{2b(x) + b(x) + 1 - a} - 2^{b(x)} = 2^{3b(x) + 1 - a} - 2^{b(x)}. \tag{9.9}
+N \equiv 2^{t(N)} - 1 \pmod{2^{t(N) + 1}}  \tag{9.10}
 \]
-
-### 9.8 Inequality:
-
-We need to show:
+This shows that if \( N \) has exactly \( t(N) \) trailing `1`s, then:
 \[
-\frac{3}{2} \cdot 2^{2b(x) + 1 - a} - 1 \geq 2^{3b(x) + 1 - a} - 2^{b(x)}. \tag{9.10}
+N \equiv 2^{t(N)} - 1 \pmod{2^{t(N) + 1}}  \tag{9.11}
 \]
-Multiply both sides by 2:
+##### Backward Direction:
+Assume \( N \equiv 2^k - 1 \pmod{2^{k+1}} \). We need to show that the binary representation of \( N \) has exactly \( k \) trailing `1`s.
+Since \( N \equiv 2^k - 1 \pmod{2^{k+1}} \), we can write:
 \[
-3 \cdot 2^{2b(x) + 1 - a} - 2 \geq 2 \cdot (2^{3b(x) + 1 - a} - 2^{b(x)}).
+N = m \cdot 2^{k+1} + (2^k - 1)  \tag{9.12}
 \]
-Simplify:
+for some integer \( m \). The term \( 2^k - 1 \) in binary is represented as a sequence of \( k \) `1`s. Therefore, the last \( k \) bits of \( N \) are all `1`s.
+To ensure that \( k \) is the largest such integer, we need to show that \( N \not\equiv 2^{k+1} - 1 \pmod{2^{k+2}} \). If \( N \equiv 2^{k+1} - 1 \pmod{2^{k+2}} \), then:
 \[
-3 \cdot 2^{2b(x) + 1 - a} - 2 \geq 2^{3b(x) + 2 - a} - 2^{b(x) + 1}. \tag{9.11}
+N = m' \cdot 2^{k+2} + (2^{k+1} - 1)  \tag{9.13}
 \]
-
-### 9.9 Rearrange the Inequality:
-
-Rearranging terms, we get:
+for some integer \( m' \). This would imply that the last \( k+1 \) bits of \( N \) are all `1`s, contradicting the assumption that \( k \) is the largest such integer.
+Therefore, \( k \) must be the exact number of trailing `1`s in the binary representation of \( N \).
+### Conclusion:
+The length \( t(N) \) of the longest sequence of trailing `1`s in the binary representation of an odd integer \( N \) is the largest integer \( k \) such that:
 \[
-3 \cdot 2^{2b(x) + 1 - a} - 2^{3b(x) + 2 - a} \geq 2 - 2^{b(x) + 1}. \tag{9.12}
+N \equiv 2^k - 1 \pmod{2^{k+1}}  \tag{9.14}
 \]
-Factor out \(2^{2b(x) + 1 - a}\):
-\[
-2^{2b(x) + 1 - a}(3 - 2^{b(x) + 1}) \geq 2(1 - 2^{b(x)}). \tag{9.13}
-\]
-For the inequality to hold, we need:
-\[
-3 - 2^{b(x) + 1} \geq 0,
-\]
-which simplifies to:
-\[
-3 \geq 2^{b(x) + 1}. \tag{9.14}
-\]
-This is only true if \(b(x) = 0\), which corresponds to the number 1. For any \(b(x) > 0\), \(2^{b(x) + 1} > 3\), and the inequality does not hold.
+This completes the proof. 
+### Algorithmic Implementation (for clarity):
+To find \( t(N) \) algorithmically, we can use the following steps:
+1. Start with \( k = \lfloor \log_2(N) \rfloor \).
+2. Check if \( N \equiv 2^k - 1 \pmod{2^{k+1}} \).
+3. If true, return \( k \). Otherwise, decrement \( k \) and repeat step 2.
+This method ensures that we find the largest \( k \) efficiently by starting from the highest possible value and working downwards.
 
-### 9.10 Examples
+Certainly! Let's refine the proof by focusing on the characterization of trailing 1s using the formula \( N \equiv 2^k - 1 \pmod{2^{k+1}} \). This will help us accurately determine the maximum possible sequence of trailing 1s for any value \( N \) in the Collatz sequence.
 
-#### Example 1: Full Processing of \(C(1)\)
+---
 
-1. **Initial Value**: \(X = 1\)
-   - Bit length: \(b(1) = 1\)
-   - Maximum possible bound for \(b(x)\): \(3b(1) = 3\)
-2. **First Step**:
-   \[
-   C(1) = 3 \cdot 1 + 1 = 4
-   \]
-   - New value: \(4\)
-   - Bit length: \(b(4) = 3\) (since \(4_{10} = 100_2\))
 
-Since the bit length of 4 is 3, which is exactly \(3b(1)\), the number 1 reaches the maximum possible bound for \(b(x)\) of \(3b(x)\).
 
-#### Example 2: Full Processing of \(C(3)\)
+### **Theorem 9.6.1 (Impossibility of Reaching $3b(x)$ for $x > 1$)**  
+For all \( x \in \mathbb{N}^+ \setminus \{1\} \), the Collatz sequence \( T^{(k)}(x) \) cannot achieve a bit-length of \( 3b(x) \), regardless of the number of steps \( k \). This holds even if the trailing 1s in \( x \)'s binary representation grow during processing.
 
-1. **Initial Value**: \(X = 3\)
-   - Bit length: \(b(3) = 2\) (since \(3_{10} = 11_2\))
-   - Maximum possible bound for \(b(x)\): \(3b(3) = 6\)
-2. **First Step**:
-   \[
-   C(3) = 3 \cdot 3 + 1 = 10
-   \]
-   - New value: \(10\)
-   - Bit length: \(b(10) = 4\) (since \(10_{10} = 1010_2\))
-3. **Second Step**:
-   \[
-   C(10) = \frac{10}{2} = 5
-   \]
-   - New value: \(5\)
-   - Bit length: \(b(5) = 3\) (since \(5_{10} = 101_2\))
-4. **Third Step**:
-   \[
-   C(5) = 3 \cdot 5 + 1 = 16
-   \]
-   - New value: \(16\)
-   - Bit length: \(b(16) = 5\) (since \(16_{10} = 10000_2\))
-5. **Fourth Step**:
-   \[
-   C(16) = \frac{16}{2} = 8
-   \]
-   - New value: \(8\)
-   - Bit length: \(b(8) = 4\) (since \(8_{10} = 1000_2\))
-6. **Fifth Step**:
-   \[
-   C(8) = \frac{8}{2} = 4
-   \]
-   - New value: \(4\)
-   - Bit length: \(b(4) = 3\) (since \(4_{10} = 100_2\))
-7. **Sixth Step**:
-   \[
-   C(4) = \frac{4}{2} = 2
-   \]
-   - New value: \(2\)
-   - Bit length: \(b(2) = 2\) (since \(2_{10} = 10_2\))
-8. **Seventh Step**:
-   \[
-   C(2) = \frac{2}{2} = 1
-   \]
-   - New value: \(1\)
-   - Bit length: \(b(1) = 1\) (since \(1_{10} = 1_2\))
+---
 
-The number 3 does not reach the maximum possible bound for \(b(x)\) of 6 bits. The maximum bit length reached during the processing is 5, which occurs at the step where the value is 16.
+#### **Proof**
 
-### 9.11 Conclusion
+1. **Initial Definitions and Notation**:
+   - Let \( x \in \mathbb{N}^+ \), \( x > 1 \), with initial bit-length \( b(x) = \lfloor \log_2 x \rfloor + 1 \).
+   - Let \( t(N) \) denote the length of the longest sequence of trailing 1s in the binary representation of \( N \), as defined by **Theorem 9.6.1**.
+   - Let \( N_k = T^{(k)}(x) \) be the value of the Collatz sequence at step \( k \), and let \( t_k = t(N_k) \).
 
-Therefore, no number other than 1 can reach a bit length of \(3b(x)\) through its processing through the Collatz function. This confirms that the only number that can satisfy the conditions for reaching \(3b(x)\) is \(X = 1\). We can formally state that the bit length \(b(x)\) of any number \(x\) during its processing through the Collatz function \(T^{(k)}(x)\) is bounded by \(3b(x)\):
+2. **Dynamic Trailing 1s Analysis Using Theorem 9.6.1**:
+   - From **Theorem 9.6.1**, \( t(N) \) is the largest integer \( k \) such that \( N \equiv 2^k - 1 \pmod{2^{k+1}} \).
+   - For any value \( N \) in the Collatz sequence, the maximum length of trailing 1s \( t_k \) can be determined using this congruence.
+
+3. **Bit-Length Growth per Step Pair**:
+   - Each pair of steps (odd followed by even) increases the bit-length by at most \( \log_2(3/2) \approx 0.58496 \) bits.
+   - To achieve \( b(N_k) \geq 3b(x) \), the total bit-length growth must satisfy:
+     $$
+     \Delta b = b(N_k) - b(x) \geq 2b(x). \tag{9.15}
+     $$
+   - The number of step pairs required is:
+     $$
+     S \geq \frac{2b(x)}{\log_2(3/2)}. \tag{9.16}
+     $$
+
+4. **Trailing 1s Requirement for \( S \) Step Pairs**:
+   - From the congruence \( N \equiv 2^k - 1 \pmod{2^{k+1}} \), the maximum trailing 1s \( t_k \) for any value \( N_k \) in the sequence must satisfy this condition.
+   - To sustain \( S \) step pairs, we need:
+     $$
+     t_k \geq \left\lceil \frac{2b(x)}{\log_2(3/2)} \right\rceil. \tag{9.17}
+     $$
+   - Simplifying the right-hand side:
+     $$
+     t_k \geq \left\lceil \frac{2b(x)}{0.58496} \right\rceil = \left\lceil 3.417b(x) \right\rceil. \tag{9.18}
+     $$
+
+5. **Contradiction with Trailing 1s Growth**:
+   - For \( x > 1 \), the initial trailing 1s \( t_0 \) are limited by the binary representation of \( x \).
+   - The Collatz function dynamics (odd and even steps) can increase trailing 1s, but this growth is constrained. Specifically, after an odd step followed by an even step, the trailing 1s sequence can temporarily grow, but it maximum sequence of trailing 1s possible satisfies the congruence \( N_k \equiv 2^{t_k} - 1 \pmod{2^{t_k + 1}} \).
+
+6. **Special Case \( x = 1 \)**:
+   - For \( x = 1 \), \( b(x) = 1 \), and the sequence reaches \( 4 \) in one step:
+     $$
+     T^{(1)}(1) = 4, \quad b(4) = 3 = 3b(x). \tag{9.19}
+     $$
+   - This is the **only** exception because \( x = 1 \) has \( t_0 = 1 \) trailing 1 and immediately maps to \( 4 \), which satisfies \( 3b(x) \).
+
+---
+
+
+### Expansion of Theorem 9.6.1 with Sample Case $ x = 31 $ (Binary: $ 11111 $)
+
+We analyze the Collatz sequence for $ x = 31 $ (binary: $ 11111 $) and verify the validity of Theorem 9.6.1 using the provided example. Specifically, we examine the value $ T^{(51)}(31) = 638 $ and its successor $ T^{(52)}(31) = 319 $, demonstrating how the trailing 1s in the binary representation of $ 319 $ align with the congruence $ N \equiv 2^k - 1 \mod 2^{k+1} $.
+
+---
+
+#### **Step 1: Binary Representation and Trailing 1s**
+- **Step 51**: $ T^{(51)}(31) = 638 $. In binary, $ 638 = 1001111110_2 $. The trailing 1s are 0 (ends with a 0).
+- **Step 52**: $ T^{(52)}(31) = 319 $. In binary, $ 319 = 100111111_2 $. The trailing 1s are **6** (the last 6 bits are all 1s).
+
+---
+
+#### **Step 2: Applying Theorem 9.6.1 to $ N = 319 $**
+We verify that $ 319 \equiv 2^k - 1 \mod 2^{k+1} $ for $ k = 6 $, as the trailing 1s in $ 319 $ are 6.
+
+1. **Compute $ 2^6 - 1 $**:
+   $$
+   2^6 - 1 = 63.
+   $$
+
+2. **Compute $ 2^{k+1} = 2^7 = 128 $**.
+
+3. **Verify the congruence**:
+   $$
+   319 \mod 128 = 319 - 2 \cdot 128 = 319 - 256 = 63.
+   $$
+   Thus:
+   $$
+   319 \equiv 63 \equiv 2^6 - 1 \mod 2^{7}.
+   $$
+
+This confirms that $ k = 6 $ is the largest integer satisfying the congruence $ 319 \equiv 2^k - 1 \mod 2^{k+1} $, and the trailing 1s in $ 319 $ are indeed 6, as observed.
+
+---
+
+### Conclusion
+Therefore, no number other than 1 can reach a bit length of \(3b(x)\) through its processing through the Collatz function. This confirms that the only number that can satisfy the conditions for reaching \(3b(x)\) is \(X = 1\) and thus we can formally state that the bit length $b(x)$ of any number \(x\) during its processing through the Collatz function \(T^{(k)}(x)\) is bounded by \(3b(x)\), we can write:
+Collaz Function
 \[
 T^{(k)}(X) = 
 \begin{cases}
@@ -957,249 +974,16 @@ T^{(k)}(X) =
 \end{cases}
 \]
 \[
-\forall k \in \mathbb{N} \cup \{0\}, \quad b(T^{(k)}(x)) \leq 3b(x). \tag{9.15}
+\forall k \in \mathbb{N} \cup \{0\}, \quad b(T^{(k)}(x)) \leq 3b(x) \tag{9.20}
 \]
 
-Here, \(T\) denotes the Collatz function, and \(T^{(k)}(x)\) represents the number after \(k\) applications of the Collatz function to \(x\).
+Here, \(T\) denotes the Collatz function, and \(T^{(k)}(x)\) represents the number after \(k\) applications of the Collatz function to \(x\). The bit length function \(b(y)\) returns the number of bits required to represent \(y\) in binary.
 
-
-### 10. Algebraic and Bit-Length Constraints on Non-Trivial Cycles in the Collatz Function  
-#### 10.1 Algebraic Constraints on Cycles  
-Let $ n_1, n_2, \dots, n_k $ be a non-trivial cycle of length $ k $ under the Collatz function $ C $. The product of transformations over the cycle satisfies:  
-$$
-\prod_{i=1}^k \frac{C(n_i)}{n_i} = 1. \tag{10.1}
-$$  
-Let $ m $ denote the number of **odd steps** in the cycle. For odd $ n_j $, the transformation is $ \frac{3n_j + 1}{n_j} = 3 + \frac{1}{n_j} $; for even $ n_l $, the transformation is $ \frac{1}{2} $. Substituting into Equation (10.1):  
-$$
-\prod_{j=1}^m \left(3 + \frac{1}{n_j}\right) \cdot 2^{-(k - m)} = 1. \tag{10.2}
-$$  
-Taking logarithms base 2:  
-$$
-\sum_{j=1}^m \log_2\left(3 + \frac{1}{n_j}\right) - (k - m) = 0. \tag{10.3}
-$$  
-
-#### 10.1.1 Tightening the Algebraic Bound  
-The key insight is that the left-hand side of Equation (10.3) is strictly increasing in $ m $, but the bit-length constraint $ n_j \leq 2^{3b(n_1)} $ (Theorem 1 [1]) limits the values of $ n_j $. For $ m \geq 2 $, the logarithmic terms $ \log_2(3 + 1/n_j) $ are bounded above by $ \log_2(4) = 2 $, leading to:  
-$$
-\sum_{j=1}^m \log_2\left(3 + \frac{1}{n_j}\right) \leq 2m.
-$$  
-Substituting into Equation (10.3):  
-$$
-2m - (k - m) \leq 0 \implies 3m \leq k. \tag{10.4}
-$$  
-**Critical Clarification:**  
-The inequality $ 3m \leq k $ arises from the requirement that the product of the odd-step transformations $ \prod_{j=1}^m (3 + 1/n_j) $ must equal $ 2^{k - m} $. Since each $ 3 + 1/n_j \leq 4 $, the product is at most $ 4^m $, which forces $ 2^{k - m} \leq 4^m $. Taking logarithms:  
-$$
-k - m \leq 2m \implies k \leq 3m.
-$$  
-Thus, the inequality $ 3m \leq k $ (from Equation 10.4) and the upper bound $ k \leq 3m $ imply $ k = 3m $. This equality holds **only if** all $ 3 + 1/n_j = 4 $, i.e., $ n_j = 1 $ for all odd steps. This recovers the trivial cycle $ 1 \to 4 \to 2 \to 1 $. For non-trivial cycles, the product $ \prod_{j=1}^m (3 + 1/n_j) $ must be strictly less than $ 4^m $, violating the equality $ k = 3m $.  
-
-#### 10.1.2 Contradiction for $ m \geq 1 $  
-**Case $ m = 1 $:**  
-Equation (10.2) becomes:  
-$$
-\left(3 + \frac{1}{n_1}\right) \cdot 2^{-(k - 1)} = 1 \implies 3 + \frac{1}{n_1} = 2^{k - 1}. \tag{10.5}
-$$  
-Rearranging:  
-$$
-n_1 = \frac{1}{2^{k - 1} - 3}. \tag{10.6}
-$$  
-For $ n_1 \in \mathbb{N} $, the denominator $ 2^{k - 1} - 3 $ must divide 1. This is only possible if $ 2^{k - 1} - 3 = 1 $, i.e., $ k = 3 $. Substituting $ k = 3 $:  
-$$
-n_1 = \frac{1}{2^{2} - 3} = 1.
-$$  
-This recovers the trivial cycle $ 1 \to 4 \to 2 \to 1 $. For $ k > 3 $, $ 2^{k - 1} - 3 > 1 $, making $ n_1 \notin \mathbb{N} $.  
-
-**Case $ m \geq 2 $:**  
-From Equation (10.4), $ k \geq 3m $. However, the required values of $ n_j $ grow exponentially with $ m $, violating the bit-length constraint $ n_j \leq 2^{3b(n_1)} $ (Theorem 1 [1]). Specifically:  
-- Each odd step $ n_j \to 3n_j + 1 $ increases the bit-length $ b(n_j) $ by at most 2 (Theorem 4.1.2 [3]).  
-- The total bit-length increase over $ m $ odd steps is $ \leq 2m $.  
-- For the cycle to return to the original bit-length $ b(n_1) $, the total bit-length gain from odd steps must be offset by bit-length loss from even steps. Each even step reduces the bit-length by 1 (Theorem 3.1 [3]).  
-
-Thus, the net bit-length gain $ 2m $ must equal the total bit-length loss $ k - m $, leading to:  
-$$
-2m = k - m \implies 3m = k. \tag{10.8}
-$$  
-However, the bit-length constraint $ n_j \leq 2^{3b(n_1)} $ restricts the maximum value of any $ n_j $ in the cycle. If $ k = 3m $, the cycle must include numbers $ n_j $ that grow exponentially with $ m $. For example, if $ m = 2 $, the product $ \prod_{j=1}^2 (3 + 1/n_j) = 2^{3m - m} = 2^{2m} $. This requires $ n_1, n_2 \to \infty $ to satisfy $ 3 + 1/n_j \to 4 $, but such values would exceed $ 2^{3b(n_1)} $, violating the bit-length bound. This contradiction proves that no non-trivial cycle can exist.  
-
-#### 10.2 Modular Arithmetic and Bit-Length Dynamics  
-The binary structure of $ 3n + 1 $ ensures trailing zeros in the result (Theorem 6.1 [4]), forcing at least one even step after each odd step. However, multiple even steps may follow a single odd step. For example:  
-- $ n = 5 $ (odd): $ 3n + 1 = 16 $ (even).  
-- $ C(16) = 8 $, $ C(8) = 4 $, $ C(4) = 2 $, $ C(2) = 1 $: four consecutive even steps.  
-
-This invalidates the claim that "the number of odd steps must equal the number of even steps." Instead, the net bit-length change per odd-even pair is at most $ +1 $, but may be offset by multiple divisions by 2. For a cycle to maintain constant bit-length:  
-$$
-\text{Total bit gain} = \text{Total bit loss}. \tag{10.7}
-$$  
-Each odd step $ n \to 3n + 1 $ increases bit-length by at most 2 (Theorem 4.1.2 [3]), and each even step $ n \to n/2 $ decreases it by 1 (Theorem 3.1 [3]). Thus:  
-$$
-2m - \sum_{l=1}^{k - m} 1 \leq 0 \implies 2m \leq k - m \implies 3m \leq k. \tag{10.8}
-$$  
-This matches the bound in Equation (10.4). For $ m \geq 1 $, $ k \geq 3m $, but as shown in Section 10.1.2, this leads to contradictions unless $ m = 1 $ and $ k = 3 $.  
-
-#### 10.3 Theorem: No Non-Trivial Cycles in the Collatz Function  
-**Theorem 10.1 (No Non-Trivial Cycles):**  
-There are no non-trivial cycles in the Collatz function. Every positive integer $ n $ eventually reaches 1 under repeated application of $ C $.  
-**Proof:**  
-1. Algebraic constraints on cycle equations (Equations 10.1–10.8).  
-2. Bit-length analysis and net gain constraints (Theorems 1 [1], 3.1 [3], 4.1.2 [3]).  
-3. Carry propagation and modular arithmetic (Theorem 6.1 [4]).  
-
-Thus concluding that there are no non-trivial cycles in the Collatz Function
+---
+... in the works...
 
 ---
 
-
-### Section 11: Formal Proof by Contradiction for the Collatz Conjecture  
-**Using the 3B Bit-Length Bound and Non-Trivial Cycle Elimination**  
-
----
-
-#### 11.1 Definitions and Assumptions  
-Let $ n \in \mathbb{N}^+ $, and define the bit length $ b(n) = \lfloor \log_2 n \rfloor + 1 $. Assume **for contradiction** that there exists $ n $ such that the Collatz sequence $ C^k(n) $ does not reach 1. This implies:  
-1. **Divergence**: $ C^k(n) \to \infty $ as $ k \to \infty $.  
-2. **Non-Trivial Cycle**: $ C^k(n) $ enters a cycle distinct from $ 1 \to 2 \to 4 \to 1 $.  
-
-We derive contradictions for both cases using the **3B bound** and **binary decomposition** of $ \mathbb{N}^+ $.
-
----
-
-
-#### 11.1 Contradiction via the 3b(n) Bit-Length Bound  
-**Theorem 11.1.1 (Global Bounding)**: For all $ n \in \mathbb{N}^+ $ and $ k \in \mathbb{N} $,  
-$$
-b(C^k(n)) \leq 3b(n). \tag{11.1}
-$$  
-**Proof**: By induction on $ k $, leveraging the structure of the Collatz function and bit-length propagation properties [CITATION:1].  
-
-**Corollary 11.1.2 (Divergence Contradiction)**:  
-Assume $ C^k(n) \to \infty $. Then $ b(C^k(n)) \to \infty $, violating Theorem 11.1. Hence, **no number diverges** under the Collatz function.
-
----
-
-
-#### 11.2 Binary Decomposition of Positive Integers
-
-##### 11.2.1 Trailing 1s
-
-**Definition:**
-From Definition 7.2, a positive integer \( n \) is in the **Trailing 1s** category if its binary representation ends with $ N \in \mathbb{N}^+ $ ($ N > 1 $) consecutive 1s. This implies:  
-$$
-X = a \cdot 2^N + (2^N - 1), \quad \text{for some } a \in \mathbb{N}. \tag{7.2}
-$$
-and represents $2^n-1$ when $a = 0$
-
-##### 11.2.2 Trailing 0s
-
-**Definition:**
-A positive integer \( n \) is in the **Trailing 0s** category if its binary representation ends with $ N \in \mathbb{N}^+ $ ($ N > 1 $) consecutive 0s. This implies:  
-Any even integer its odd part $m$ and power of 2 factor $2^a$:  
-$$
-X = m \cdot 2^a, \quad \text{where } m \text{ is odd}. \tag{9.2}
-$$  
-This decomposition follows from the fundamental theorem of arithmetic.  
-This form will strictly reduce by $a$ bits having $a = v_2(X)$ and $v_2(X)$ is the 2-adic representation of X.
-
-##### 11.2.3 Mixed Patterns
-
-**Definition:**
-A positive integer \( n \) is in the **Mixed Patterns** category if it does not fit into either of the previous two categories, i.e., it has a binary representation that includes both 1s and 0s but does not end with trailing zeros of length > 1 or trailing 1s of length > 1.
-
-**Proof:**
-We know that trailing 1s will take 2n-1 steps to end in a form that can be divided by 4 and will gain at most n+1 bits.
-    - We also know that the is no possible number that will grow beyond 3b(x) where x is the initila input number.
-We know that trailing 0s will tak n steps to end in a form that is odd and will lose n bits
-Leaving only possible trivial cycles of alternating 1s and 0s.
-
-
-#### 11.4 Contradiction via Non-Trivial Cycles  
-**Theorem 11.3 (Net Bit Gain)**: For any cycle $ n_1 \to n_2 \to \dots \to n_k \to n_1 $, the product of transformations satisfies:  
-$$
-\prod_{i=1}^k \frac{C(n_i)}{n_i} = 1. \tag{11.2}
-$$  
-Let $ m $ denote the number of odd steps. For odd $ n_i $, $ C(n_i) = 3n_i + 1 $; for even $ n_i $, $ C(n_i) = n_i/2 $. Equation (11.2) becomes:  
-$$
-\left(\prod_{j=1}^m \left(3 + \frac{1}{n_j}\right)\right) \cdot 2^{-(k-m)} = 1. \tag{11.3}
-$$  
-
-**Theorem 11.4 (Cycle Bit-Length Bound)**: For all $ i \in [k] $, $ b(n_i) \leq 3b(n_1) $ [CITATION:1]. This implies $ n_j \leq 2^{3b(n_1)} $, bounding the terms in Equation (11.3). For $ m \geq 1 $, the left-hand side of Equation (11.3) grows with $ m $, but the bounded $ n_j $ make the equation unsolvable for $ k > 3 $ or $ m > 1 $.  
-
-As shown in Theorem 10.3, **no non-trivial cycle exists**.
-
-The assumption of a counterexample leads to contradictions:  
-1. Divergence violates Theorem 11.1.  
-2. Non-trivial cycles violate Theorems 11.3–11.5.  
-
-Therefore, **all $ n \in \mathbb{N}^+ $ eventually reach 1** under the Collatz function.  
-
---- 
-### Formal Proof of the Collatz Conjecture
-
-#### 11.5 Final Contradiction
-
-To formally prove the Collatz Conjecture, we will show that assuming a counterexample leads to contradictions in both divergence and non-trivial cycle scenarios. This proof builds on the established theorems and corollaries from previous sections.
-
-### Theorem (Collatz Conjecture): 
-For every positive integer \( n \in \mathbb{N}^+ \), the Collatz sequence \( C^k(n) \) eventually reaches 1, where \( C(n) = \frac{n}{2} \) if \( n \) is even and \( C(n) = 3n + 1 \) if \( n \) is odd.
-
-### Proof by Contradiction:
-
-#### Step 1: Assume a Counterexample
-Assume for contradiction that there exists a positive integer \( n_0 \) such that the Collatz sequence \( C^k(n_0) \) does not reach 1. This implies one of two scenarios:
-1. **Divergence**: The sequence \( C^k(n_0) \to \infty \) as \( k \to \infty \).
-2. **Non-Trivial Cycle**: The sequence enters a cycle distinct from the trivial cycle \( 1 \to 4 \to 2 \to 1 \).
-
-#### Step 2: Contradiction via Divergence
-
-**Theorem 11.1 (Global Bounding)**:
-For all \( n \in \mathbb{N}^+ \) and \( k \in \mathbb{N} \),
-\[
-b(C^k(n)) \leq 3b(n). \tag{11.1}
-\]
-where \( b(n) = \lfloor \log_2 n \rfloor + 1 \).
-
-**Proof**: By induction on \( k \), leveraging the structure of the Collatz function and bit-length propagation properties (Theorem 1 [CITATION:1]).
-
-**Corollary 11.1.2 (Divergence Contradiction)**:
-Assume \( C^k(n_0) \to \infty \). Then \( b(C^k(n_0)) \to \infty \), which contradicts Theorem 11.1. Hence, **no number diverges** under the Collatz function.
-
-#### Step 3: Contradiction via Non-Trivial Cycles
-
-**Theorem 11.3 (Net Bit Gain)**:
-For any cycle \( n_1 \to n_2 \to \dots \to n_k \to n_1 \), the product of transformations satisfies:
-\[
-\prod_{i=1}^k \frac{C(n_i)}{n_i} = 1. \tag{11.2}
-\]
-Let \( m \) denote the number of odd steps. For odd \( n_i \), \( C(n_i) = 3n_i + 1 \); for even \( n_i \), \( C(n_i) = \frac{n_i}{2} \). Equation (11.2) becomes:
-\[
-\left(\prod_{j=1}^m \left(3 + \frac{1}{n_j}\right)\right) \cdot 2^{-(k-m)} = 1. \tag{11.3}
-\]
-
-**Theorem 10.4 (Cycle Bit-Length Bound)**:
-For all \( i \in [k] \), \( b(n_i) \leq 3b(n_1) \). This implies \( n_j \leq 2^{3b(n_1)} \), bounding the terms in Equation (11.3).
-
-**Proof of No Non-Trivial Cycles**:
-From Theorem 10.4, for \( m \geq 1 \), the left-hand side of Equation (11.3) grows with \( m \). However, the bounded \( n_j \) make the equation unsolvable for \( k > 3 \) or \( m > 1 \).
-
-As shown in Theorem 10.3, **no non-trivial cycle exists**.
-
-#### Step 4: Final Contradiction
-The assumption of a counterexample leads to contradictions:
-1. Divergence violates Theorem 11.1.
-2. Non-trivial cycles violate Theorems 10.3 and 11.3–11.4.
-
-Therefore, the only possible scenario is that **all \( n \in \mathbb{N}^+ \) eventually reach 1** under the Collatz function.
-
-
-## Conclusion
-
-The Collatz Conjecture is true for all positive integers, the only meaninful growth coming when a sequence of trailing 1s is seen in the number structure. This pattern has predictable mutations and thus allow us to construct bounds on the total growth of the system in terms of bits by 3 times its original size
-
-For all \( n \in \mathbb{N}^+ \) and \( k \in \mathbb{N} \),
-\[
-b(C^k(n)) \leq 3b(n). \tag{11.1}
-\]
-where \( b(n) = \lfloor \log_2 n \rfloor + 1 \).
 
 # Appendix
 
@@ -1737,6 +1521,9 @@ Table C.1 Maximum bits for 2^N-1 up to N = 100
 Input Number Decimal: 31
 
 Input Number Binary: 11111
+- Input Number Decimal: 31
+
+Input Number Binary: 11111
 - **Forecast: Growth stops at step: \(9\); Step Number for next guaranteed multi-bit reduction: \(10 (10)\)...**
 ---
 - **Step \(1\): Decimal:  \(31_{10}\) = Binary: \(11111_2\)**
@@ -1746,7 +1533,7 @@ Input Number Binary: 11111
     - Add \(1\): Decimal Result:  \(94_{10}\) - Binary Result: \(1011110_2 \)
 - **Step \(2\): Decimal:  \(94_{10}\) = Binary: \(1011110_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(10 (9)\)...**
-    - Step \(1\) Right Shift:  \(94_{10}\) - Binary Result: \(101111_2 \)
+    - Step \(1\) Right Shift Result:  \(47_{10}\) - Binary Result: \(101111_2 \)
 - **Step \(3\): Decimal:  \(47_{10}\) = Binary: \(101111_2\)**
 - **Forecast: Growth stops at step: \(9\); Step Number for next guaranteed multi-bit reduction: \(10 (8)\)...**
     - Left Shift \((2x)\): Decimal Result:  \(94_{10}\) - Binary Result: \(1011110_2 \)
@@ -1754,7 +1541,7 @@ Input Number Binary: 11111
     - Add \(1\): Decimal Result:  \(142_{10}\) - Binary Result: \(10001110_2 \)
 - **Step \(4\): Decimal:  \(142_{10}\) = Binary: \(10001110_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(10 (7)\)...**
-    - Step \(3\) Right Shift:  \(142_{10}\) - Binary Result: \(1000111_2 \)
+    - Step \(3\) Right Shift Result:  \(71_{10}\) - Binary Result: \(1000111_2 \)
 - **Step \(5\): Decimal:  \(71_{10}\) = Binary: \(1000111_2\)**
 - **Forecast: Growth stops at step: \(9\); Step Number for next guaranteed multi-bit reduction: \(10 (6)\)...**
     - Left Shift \((2x)\): Decimal Result:  \(142_{10}\) - Binary Result: \(10001110_2 \)
@@ -1762,49 +1549,49 @@ Input Number Binary: 11111
     - Add \(1\): Decimal Result:  \(214_{10}\) - Binary Result: \(11010110_2 \)
 - **Step \(6\): Decimal:  \(214_{10}\) = Binary: \(11010110_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(10 (5)\)...**
-    - Step \(5\) Right Shift:  \(214_{10}\) - Binary Result: \(1101011_2 \)
+    - Step \(5\) Right Shift Result:  \(107_{10}\) - Binary Result: \(1101011_2 \)
 - **Step \(7\): Decimal:  \(107_{10}\) = Binary: \(1101011_2\)**
 - **Forecast: Growth stops at step: \(9\); Step Number for next guaranteed multi-bit reduction: \(10 (4)\)...**
     - Left Shift \((2x)\): Decimal Result:  \(214_{10}\) - Binary Result: \(11010110_2 \)
     - Add \(X\): Decimal Result:  \(321_{10}\) - Binary Result: \(101000001_2 \)
     - Add \(1\): Decimal Result:  \(322_{10}\) - Binary Result: \(101000010_2 \)
 - **Step \(8\): Decimal:  \(322_{10}\) = Binary: \(101000010_2\)**
-    - Step \(7\) Right Shift:  \(322_{10}\) - Binary Result: \(10100001_2 \)
+    - Step \(7\) Right Shift Result:  \(161_{10}\) - Binary Result: \(10100001_2 \)
 - **Step \(9\): Decimal:  \(161_{10}\) = Binary: \(10100001_2\)**
     - Left Shift \((2x)\): Decimal Result:  \(322_{10}\) - Binary Result: \(101000010_2 \)
     - Add \(X\): Decimal Result:  \(483_{10}\) - Binary Result: \(111100011_2 \)
     - Add \(1\): Decimal Result:  \(484_{10}\) - Binary Result: \(111100100_2 \)
 - **Step \(10\): Decimal:  \(484_{10}\) = Binary: \(111100100_2\)**
-    - Step \(9\) Right Shift:  \(484_{10}\) - Binary Result: \(11110010_2 \)
+    - Step \(9\) Right Shift Result:  \(242_{10}\) - Binary Result: \(11110010_2 \)
 - **Step \(11\): Decimal:  \(242_{10}\) = Binary: \(11110010_2\)**
-    - Step \(10\) Right Shift:  \(242_{10}\) - Binary Result: \(1111001_2 \)
+    - Step \(10\) Right Shift Result:  \(121_{10}\) - Binary Result: \(1111001_2 \)
 - **Step \(12\): Decimal:  \(121_{10}\) = Binary: \(1111001_2\)**
     - Left Shift \((2x)\): Decimal Result:  \(242_{10}\) - Binary Result: \(11110010_2 \)
     - Add \(X\): Decimal Result:  \(363_{10}\) - Binary Result: \(101101011_2 \)
     - Add \(1\): Decimal Result:  \(364_{10}\) - Binary Result: \(101101100_2 \)
 - **Step \(13\): Decimal:  \(364_{10}\) = Binary: \(101101100_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(18 (6)\)...**
-    - Step \(12\) Right Shift:  \(364_{10}\) - Binary Result: \(10110110_2 \)
+    - Step \(12\) Right Shift Result:  \(182_{10}\) - Binary Result: \(10110110_2 \)
 - **Step \(14\): Decimal:  \(182_{10}\) = Binary: \(10110110_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(18 (5)\)...**
-    - Step \(13\) Right Shift:  \(182_{10}\) - Binary Result: \(1011011_2 \)
+    - Step \(13\) Right Shift Result:  \(91_{10}\) - Binary Result: \(1011011_2 \)
 - **Step \(15\): Decimal:  \(91_{10}\) = Binary: \(1011011_2\)**
 - **Forecast: Growth stops at step: \(17\); Step Number for next guaranteed multi-bit reduction: \(18 (4)\)...**
     - Left Shift \((2x)\): Decimal Result:  \(182_{10}\) - Binary Result: \(10110110_2 \)
     - Add \(X\): Decimal Result:  \(273_{10}\) - Binary Result: \(100010001_2 \)
     - Add \(1\): Decimal Result:  \(274_{10}\) - Binary Result: \(100010010_2 \)
 - **Step \(16\): Decimal:  \(274_{10}\) = Binary: \(100010010_2\)**
-    - Step \(15\) Right Shift:  \(274_{10}\) - Binary Result: \(10001001_2 \)
+    - Step \(15\) Right Shift Result:  \(137_{10}\) - Binary Result: \(10001001_2 \)
 - **Step \(17\): Decimal:  \(137_{10}\) = Binary: \(10001001_2\)**
     - Left Shift \((2x)\): Decimal Result:  \(274_{10}\) - Binary Result: \(100010010_2 \)
     - Add \(X\): Decimal Result:  \(411_{10}\) - Binary Result: \(110011011_2 \)
     - Add \(1\): Decimal Result:  \(412_{10}\) - Binary Result: \(110011100_2 \)
 - **Step \(18\): Decimal:  \(412_{10}\) = Binary: \(110011100_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(25 (8)\)...**
-    - Step \(17\) Right Shift:  \(412_{10}\) - Binary Result: \(11001110_2 \)
+    - Step \(17\) Right Shift Result:  \(206_{10}\) - Binary Result: \(11001110_2 \)
 - **Step \(19\): Decimal:  \(206_{10}\) = Binary: \(11001110_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(25 (7)\)...**
-    - Step \(18\) Right Shift:  \(206_{10}\) - Binary Result: \(1100111_2 \)
+    - Step \(18\) Right Shift Result:  \(103_{10}\) - Binary Result: \(1100111_2 \)
 - **Step \(20\): Decimal:  \(103_{10}\) = Binary: \(1100111_2\)**
 - **Forecast: Growth stops at step: \(24\); Step Number for next guaranteed multi-bit reduction: \(25 (6)\)...**
     - Left Shift \((2x)\): Decimal Result:  \(206_{10}\) - Binary Result: \(11001110_2 \)
@@ -1812,24 +1599,24 @@ Input Number Binary: 11111
     - Add \(1\): Decimal Result:  \(310_{10}\) - Binary Result: \(100110110_2 \)
 - **Step \(21\): Decimal:  \(310_{10}\) = Binary: \(100110110_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(25 (5)\)...**
-    - Step \(20\) Right Shift:  \(310_{10}\) - Binary Result: \(10011011_2 \)
+    - Step \(20\) Right Shift Result:  \(155_{10}\) - Binary Result: \(10011011_2 \)
 - **Step \(22\): Decimal:  \(155_{10}\) = Binary: \(10011011_2\)**
 - **Forecast: Growth stops at step: \(24\); Step Number for next guaranteed multi-bit reduction: \(25 (4)\)...**
     - Left Shift \((2x)\): Decimal Result:  \(310_{10}\) - Binary Result: \(100110110_2 \)
     - Add \(X\): Decimal Result:  \(465_{10}\) - Binary Result: \(111010001_2 \)
     - Add \(1\): Decimal Result:  \(466_{10}\) - Binary Result: \(111010010_2 \)
 - **Step \(23\): Decimal:  \(466_{10}\) = Binary: \(111010010_2\)**
-    - Step \(22\) Right Shift:  \(466_{10}\) - Binary Result: \(11101001_2 \)
+    - Step \(22\) Right Shift Result:  \(233_{10}\) - Binary Result: \(11101001_2 \)
 - **Step \(24\): Decimal:  \(233_{10}\) = Binary: \(11101001_2\)**
     - Left Shift \((2x)\): Decimal Result:  \(466_{10}\) - Binary Result: \(111010010_2 \)
     - Add \(X\): Decimal Result:  \(699_{10}\) - Binary Result: \(1010111011_2 \)
     - Add \(1\): Decimal Result:  \(700_{10}\) - Binary Result: \(1010111100_2 \)
 - **Step \(25\): Decimal:  \(700_{10}\) = Binary: \(1010111100_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(34 (10)\)...**
-    - Step \(24\) Right Shift:  \(700_{10}\) - Binary Result: \(101011110_2 \)
+    - Step \(24\) Right Shift Result:  \(350_{10}\) - Binary Result: \(101011110_2 \)
 - **Step \(26\): Decimal:  \(350_{10}\) = Binary: \(101011110_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(34 (9)\)...**
-    - Step \(25\) Right Shift:  \(350_{10}\) - Binary Result: \(10101111_2 \)
+    - Step \(25\) Right Shift Result:  \(175_{10}\) - Binary Result: \(10101111_2 \)
 - **Step \(27\): Decimal:  \(175_{10}\) = Binary: \(10101111_2\)**
 - **Forecast: Growth stops at step: \(33\); Step Number for next guaranteed multi-bit reduction: \(34 (8)\)...**
     - Left Shift \((2x)\): Decimal Result:  \(350_{10}\) - Binary Result: \(101011110_2 \)
@@ -1837,7 +1624,7 @@ Input Number Binary: 11111
     - Add \(1\): Decimal Result:  \(526_{10}\) - Binary Result: \(1000001110_2 \)
 - **Step \(28\): Decimal:  \(526_{10}\) = Binary: \(1000001110_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(34 (7)\)...**
-    - Step \(27\) Right Shift:  \(526_{10}\) - Binary Result: \(100000111_2 \)
+    - Step \(27\) Right Shift Result:  \(263_{10}\) - Binary Result: \(100000111_2 \)
 - **Step \(29\): Decimal:  \(263_{10}\) = Binary: \(100000111_2\)**
 - **Forecast: Growth stops at step: \(33\); Step Number for next guaranteed multi-bit reduction: \(34 (6)\)...**
     - Left Shift \((2x)\): Decimal Result:  \(526_{10}\) - Binary Result: \(1000001110_2 \)
@@ -1845,35 +1632,35 @@ Input Number Binary: 11111
     - Add \(1\): Decimal Result:  \(790_{10}\) - Binary Result: \(1100010110_2 \)
 - **Step \(30\): Decimal:  \(790_{10}\) = Binary: \(1100010110_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(34 (5)\)...**
-    - Step \(29\) Right Shift:  \(790_{10}\) - Binary Result: \(110001011_2 \)
+    - Step \(29\) Right Shift Result:  \(395_{10}\) - Binary Result: \(110001011_2 \)
 - **Step \(31\): Decimal:  \(395_{10}\) = Binary: \(110001011_2\)**
 - **Forecast: Growth stops at step: \(33\); Step Number for next guaranteed multi-bit reduction: \(34 (4)\)...**
     - Left Shift \((2x)\): Decimal Result:  \(790_{10}\) - Binary Result: \(1100010110_2 \)
     - Add \(X\): Decimal Result:  \(1185_{10}\) - Binary Result: \(10010100001_2 \)
     - Add \(1\): Decimal Result:  \(1186_{10}\) - Binary Result: \(10010100010_2 \)
 - **Step \(32\): Decimal:  \(1186_{10}\) = Binary: \(10010100010_2\)**
-    - Step \(31\) Right Shift:  \(1186_{10}\) - Binary Result: \(1001010001_2 \)
+    - Step \(31\) Right Shift Result:  \(593_{10}\) - Binary Result: \(1001010001_2 \)
 - **Step \(33\): Decimal:  \(593_{10}\) = Binary: \(1001010001_2\)**
     - Left Shift \((2x)\): Decimal Result:  \(1186_{10}\) - Binary Result: \(10010100010_2 \)
     - Add \(X\): Decimal Result:  \(1779_{10}\) - Binary Result: \(11011110011_2 \)
     - Add \(1\): Decimal Result:  \(1780_{10}\) - Binary Result: \(11011110100_2 \)
 - **Step \(34\): Decimal:  \(1780_{10}\) = Binary: \(11011110100_2\)**
-    - Step \(33\) Right Shift:  \(1780_{10}\) - Binary Result: \(1101111010_2 \)
+    - Step \(33\) Right Shift Result:  \(890_{10}\) - Binary Result: \(1101111010_2 \)
 - **Step \(35\): Decimal:  \(890_{10}\) = Binary: \(1101111010_2\)**
-    - Step \(34\) Right Shift:  \(890_{10}\) - Binary Result: \(110111101_2 \)
+    - Step \(34\) Right Shift Result:  \(445_{10}\) - Binary Result: \(110111101_2 \)
 - **Step \(36\): Decimal:  \(445_{10}\) = Binary: \(110111101_2\)**
     - Left Shift \((2x)\): Decimal Result:  \(890_{10}\) - Binary Result: \(1101111010_2 \)
     - Add \(X\): Decimal Result:  \(1335_{10}\) - Binary Result: \(10100110111_2 \)
     - Add \(1\): Decimal Result:  \(1336_{10}\) - Binary Result: \(10100111000_2 \)
 - **Step \(37\): Decimal:  \(1336_{10}\) = Binary: \(10100111000_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(45 (9)\)...**
-    - Step \(36\) Right Shift:  \(1336_{10}\) - Binary Result: \(1010011100_2 \)
+    - Step \(36\) Right Shift Result:  \(668_{10}\) - Binary Result: \(1010011100_2 \)
 - **Step \(38\): Decimal:  \(668_{10}\) = Binary: \(1010011100_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(45 (8)\)...**
-    - Step \(37\) Right Shift:  \(668_{10}\) - Binary Result: \(101001110_2 \)
+    - Step \(37\) Right Shift Result:  \(334_{10}\) - Binary Result: \(101001110_2 \)
 - **Step \(39\): Decimal:  \(334_{10}\) = Binary: \(101001110_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(45 (7)\)...**
-    - Step \(38\) Right Shift:  \(334_{10}\) - Binary Result: \(10100111_2 \)
+    - Step \(38\) Right Shift Result:  \(167_{10}\) - Binary Result: \(10100111_2 \)
 - **Step \(40\): Decimal:  \(167_{10}\) = Binary: \(10100111_2\)**
 - **Forecast: Growth stops at step: \(44\); Step Number for next guaranteed multi-bit reduction: \(45 (6)\)...**
     - Left Shift \((2x)\): Decimal Result:  \(334_{10}\) - Binary Result: \(101001110_2 \)
@@ -1881,41 +1668,41 @@ Input Number Binary: 11111
     - Add \(1\): Decimal Result:  \(502_{10}\) - Binary Result: \(111110110_2 \)
 - **Step \(41\): Decimal:  \(502_{10}\) = Binary: \(111110110_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(45 (5)\)...**
-    - Step \(40\) Right Shift:  \(502_{10}\) - Binary Result: \(11111011_2 \)
+    - Step \(40\) Right Shift Result:  \(251_{10}\) - Binary Result: \(11111011_2 \)
 - **Step \(42\): Decimal:  \(251_{10}\) = Binary: \(11111011_2\)**
 - **Forecast: Growth stops at step: \(44\); Step Number for next guaranteed multi-bit reduction: \(45 (4)\)...**
     - Left Shift \((2x)\): Decimal Result:  \(502_{10}\) - Binary Result: \(111110110_2 \)
     - Add \(X\): Decimal Result:  \(753_{10}\) - Binary Result: \(1011110001_2 \)
     - Add \(1\): Decimal Result:  \(754_{10}\) - Binary Result: \(1011110010_2 \)
 - **Step \(43\): Decimal:  \(754_{10}\) = Binary: \(1011110010_2\)**
-    - Step \(42\) Right Shift:  \(754_{10}\) - Binary Result: \(101111001_2 \)
+    - Step \(42\) Right Shift Result:  \(377_{10}\) - Binary Result: \(101111001_2 \)
 - **Step \(44\): Decimal:  \(377_{10}\) = Binary: \(101111001_2\)**
     - Left Shift \((2x)\): Decimal Result:  \(754_{10}\) - Binary Result: \(1011110010_2 \)
     - Add \(X\): Decimal Result:  \(1131_{10}\) - Binary Result: \(10001101011_2 \)
     - Add \(1\): Decimal Result:  \(1132_{10}\) - Binary Result: \(10001101100_2 \)
 - **Step \(45\): Decimal:  \(1132_{10}\) = Binary: \(10001101100_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(50 (6)\)...**
-    - Step \(44\) Right Shift:  \(1132_{10}\) - Binary Result: \(1000110110_2 \)
+    - Step \(44\) Right Shift Result:  \(566_{10}\) - Binary Result: \(1000110110_2 \)
 - **Step \(46\): Decimal:  \(566_{10}\) = Binary: \(1000110110_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(50 (5)\)...**
-    - Step \(45\) Right Shift:  \(566_{10}\) - Binary Result: \(100011011_2 \)
+    - Step \(45\) Right Shift Result:  \(283_{10}\) - Binary Result: \(100011011_2 \)
 - **Step \(47\): Decimal:  \(283_{10}\) = Binary: \(100011011_2\)**
 - **Forecast: Growth stops at step: \(49\); Step Number for next guaranteed multi-bit reduction: \(50 (4)\)...**
     - Left Shift \((2x)\): Decimal Result:  \(566_{10}\) - Binary Result: \(1000110110_2 \)
     - Add \(X\): Decimal Result:  \(849_{10}\) - Binary Result: \(1101010001_2 \)
     - Add \(1\): Decimal Result:  \(850_{10}\) - Binary Result: \(1101010010_2 \)
 - **Step \(48\): Decimal:  \(850_{10}\) = Binary: \(1101010010_2\)**
-    - Step \(47\) Right Shift:  \(850_{10}\) - Binary Result: \(110101001_2 \)
+    - Step \(47\) Right Shift Result:  \(425_{10}\) - Binary Result: \(110101001_2 \)
 - **Step \(49\): Decimal:  \(425_{10}\) = Binary: \(110101001_2\)**
     - Left Shift \((2x)\): Decimal Result:  \(850_{10}\) - Binary Result: \(1101010010_2 \)
     - Add \(X\): Decimal Result:  \(1275_{10}\) - Binary Result: \(10011111011_2 \)
     - Add \(1\): Decimal Result:  \(1276_{10}\) - Binary Result: \(10011111100_2 \)
 - **Step \(50\): Decimal:  \(1276_{10}\) = Binary: \(10011111100_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(63 (14)\)...**
-    - Step \(49\) Right Shift:  \(1276_{10}\) - Binary Result: \(1001111110_2 \)
+    - Step \(49\) Right Shift Result:  \(638_{10}\) - Binary Result: \(1001111110_2 \)
 - **Step \(51\): Decimal:  \(638_{10}\) = Binary: \(1001111110_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(63 (13)\)...**
-    - Step \(50\) Right Shift:  \(638_{10}\) - Binary Result: \(100111111_2 \)
+    - Step \(50\) Right Shift Result:  \(319_{10}\) - Binary Result: \(100111111_2 \)
 - **Step \(52\): Decimal:  \(319_{10}\) = Binary: \(100111111_2\)**
 - **Forecast: Growth stops at step: \(62\); Step Number for next guaranteed multi-bit reduction: \(63 (12)\)...**
     - Left Shift \((2x)\): Decimal Result:  \(638_{10}\) - Binary Result: \(1001111110_2 \)
@@ -1923,7 +1710,7 @@ Input Number Binary: 11111
     - Add \(1\): Decimal Result:  \(958_{10}\) - Binary Result: \(1110111110_2 \)
 - **Step \(53\): Decimal:  \(958_{10}\) = Binary: \(1110111110_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(63 (11)\)...**
-    - Step \(52\) Right Shift:  \(958_{10}\) - Binary Result: \(111011111_2 \)
+    - Step \(52\) Right Shift Result:  \(479_{10}\) - Binary Result: \(111011111_2 \)
 - **Step \(54\): Decimal:  \(479_{10}\) = Binary: \(111011111_2\)**
 - **Forecast: Growth stops at step: \(62\); Step Number for next guaranteed multi-bit reduction: \(63 (10)\)...**
     - Left Shift \((2x)\): Decimal Result:  \(958_{10}\) - Binary Result: \(1110111110_2 \)
@@ -1931,7 +1718,7 @@ Input Number Binary: 11111
     - Add \(1\): Decimal Result:  \(1438_{10}\) - Binary Result: \(10110011110_2 \)
 - **Step \(55\): Decimal:  \(1438_{10}\) = Binary: \(10110011110_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(63 (9)\)...**
-    - Step \(54\) Right Shift:  \(1438_{10}\) - Binary Result: \(1011001111_2 \)
+    - Step \(54\) Right Shift Result:  \(719_{10}\) - Binary Result: \(1011001111_2 \)
 - **Step \(56\): Decimal:  \(719_{10}\) = Binary: \(1011001111_2\)**
 - **Forecast: Growth stops at step: \(62\); Step Number for next guaranteed multi-bit reduction: \(63 (8)\)...**
     - Left Shift \((2x)\): Decimal Result:  \(1438_{10}\) - Binary Result: \(10110011110_2 \)
@@ -1939,7 +1726,7 @@ Input Number Binary: 11111
     - Add \(1\): Decimal Result:  \(2158_{10}\) - Binary Result: \(100001101110_2 \)
 - **Step \(57\): Decimal:  \(2158_{10}\) = Binary: \(100001101110_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(63 (7)\)...**
-    - Step \(56\) Right Shift:  \(2158_{10}\) - Binary Result: \(10000110111_2 \)
+    - Step \(56\) Right Shift Result:  \(1079_{10}\) - Binary Result: \(10000110111_2 \)
 - **Step \(58\): Decimal:  \(1079_{10}\) = Binary: \(10000110111_2\)**
 - **Forecast: Growth stops at step: \(62\); Step Number for next guaranteed multi-bit reduction: \(63 (6)\)...**
     - Left Shift \((2x)\): Decimal Result:  \(2158_{10}\) - Binary Result: \(100001101110_2 \)
@@ -1947,27 +1734,27 @@ Input Number Binary: 11111
     - Add \(1\): Decimal Result:  \(3238_{10}\) - Binary Result: \(110010100110_2 \)
 - **Step \(59\): Decimal:  \(3238_{10}\) = Binary: \(110010100110_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(63 (5)\)...**
-    - Step \(58\) Right Shift:  \(3238_{10}\) - Binary Result: \(11001010011_2 \)
+    - Step \(58\) Right Shift Result:  \(1619_{10}\) - Binary Result: \(11001010011_2 \)
 - **Step \(60\): Decimal:  \(1619_{10}\) = Binary: \(11001010011_2\)**
 - **Forecast: Growth stops at step: \(62\); Step Number for next guaranteed multi-bit reduction: \(63 (4)\)...**
     - Left Shift \((2x)\): Decimal Result:  \(3238_{10}\) - Binary Result: \(110010100110_2 \)
     - Add \(X\): Decimal Result:  \(4857_{10}\) - Binary Result: \(1001011111001_2 \)
     - Add \(1\): Decimal Result:  \(4858_{10}\) - Binary Result: \(1001011111010_2 \)
 - **Step \(61\): Decimal:  \(4858_{10}\) = Binary: \(1001011111010_2\)**
-    - Step \(60\) Right Shift:  \(4858_{10}\) - Binary Result: \(100101111101_2 \)
+    - Step \(60\) Right Shift Result:  \(2429_{10}\) - Binary Result: \(100101111101_2 \)
 - **Step \(62\): Decimal:  \(2429_{10}\) = Binary: \(100101111101_2\)**
     - Left Shift \((2x)\): Decimal Result:  \(4858_{10}\) - Binary Result: \(1001011111010_2 \)
     - Add \(X\): Decimal Result:  \(7287_{10}\) - Binary Result: \(1110001110111_2 \)
     - Add \(1\): Decimal Result:  \(7288_{10}\) - Binary Result: \(1110001111000_2 \)
 - **Step \(63\): Decimal:  \(7288_{10}\) = Binary: \(1110001111000_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(73 (11)\)...**
-    - Step \(62\) Right Shift:  \(7288_{10}\) - Binary Result: \(111000111100_2 \)
+    - Step \(62\) Right Shift Result:  \(3644_{10}\) - Binary Result: \(111000111100_2 \)
 - **Step \(64\): Decimal:  \(3644_{10}\) = Binary: \(111000111100_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(73 (10)\)...**
-    - Step \(63\) Right Shift:  \(3644_{10}\) - Binary Result: \(11100011110_2 \)
+    - Step \(63\) Right Shift Result:  \(1822_{10}\) - Binary Result: \(11100011110_2 \)
 - **Step \(65\): Decimal:  \(1822_{10}\) = Binary: \(11100011110_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(73 (9)\)...**
-    - Step \(64\) Right Shift:  \(1822_{10}\) - Binary Result: \(1110001111_2 \)
+    - Step \(64\) Right Shift Result:  \(911_{10}\) - Binary Result: \(1110001111_2 \)
 - **Step \(66\): Decimal:  \(911_{10}\) = Binary: \(1110001111_2\)**
 - **Forecast: Growth stops at step: \(72\); Step Number for next guaranteed multi-bit reduction: \(73 (8)\)...**
     - Left Shift \((2x)\): Decimal Result:  \(1822_{10}\) - Binary Result: \(11100011110_2 \)
@@ -1975,7 +1762,7 @@ Input Number Binary: 11111
     - Add \(1\): Decimal Result:  \(2734_{10}\) - Binary Result: \(101010101110_2 \)
 - **Step \(67\): Decimal:  \(2734_{10}\) = Binary: \(101010101110_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(73 (7)\)...**
-    - Step \(66\) Right Shift:  \(2734_{10}\) - Binary Result: \(10101010111_2 \)
+    - Step \(66\) Right Shift Result:  \(1367_{10}\) - Binary Result: \(10101010111_2 \)
 - **Step \(68\): Decimal:  \(1367_{10}\) = Binary: \(10101010111_2\)**
 - **Forecast: Growth stops at step: \(72\); Step Number for next guaranteed multi-bit reduction: \(73 (6)\)...**
     - Left Shift \((2x)\): Decimal Result:  \(2734_{10}\) - Binary Result: \(101010101110_2 \)
@@ -1983,67 +1770,67 @@ Input Number Binary: 11111
     - Add \(1\): Decimal Result:  \(4102_{10}\) - Binary Result: \(1000000000110_2 \)
 - **Step \(69\): Decimal:  \(4102_{10}\) = Binary: \(1000000000110_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(73 (5)\)...**
-    - Step \(68\) Right Shift:  \(4102_{10}\) - Binary Result: \(100000000011_2 \)
+    - Step \(68\) Right Shift Result:  \(2051_{10}\) - Binary Result: \(100000000011_2 \)
 - **Step \(70\): Decimal:  \(2051_{10}\) = Binary: \(100000000011_2\)**
 - **Forecast: Growth stops at step: \(72\); Step Number for next guaranteed multi-bit reduction: \(73 (4)\)...**
     - Left Shift \((2x)\): Decimal Result:  \(4102_{10}\) - Binary Result: \(1000000000110_2 \)
     - Add \(X\): Decimal Result:  \(6153_{10}\) - Binary Result: \(1100000001001_2 \)
     - Add \(1\): Decimal Result:  \(6154_{10}\) - Binary Result: \(1100000001010_2 \)
 - **Step \(71\): Decimal:  \(6154_{10}\) = Binary: \(1100000001010_2\)**
-    - Step \(70\) Right Shift:  \(6154_{10}\) - Binary Result: \(110000000101_2 \)
+    - Step \(70\) Right Shift Result:  \(3077_{10}\) - Binary Result: \(110000000101_2 \)
 - **Step \(72\): Decimal:  \(3077_{10}\) = Binary: \(110000000101_2\)**
     - Left Shift \((2x)\): Decimal Result:  \(6154_{10}\) - Binary Result: \(1100000001010_2 \)
     - Add \(X\): Decimal Result:  \(9231_{10}\) - Binary Result: \(10010000001111_2 \)
     - Add \(1\): Decimal Result:  \(9232_{10}\) - Binary Result: \(10010000010000_2 \)
 - **Step \(73\): Decimal:  \(9232_{10}\) = Binary: \(10010000010000_2\)**
-    - Step \(72\) Right Shift:  \(9232_{10}\) - Binary Result: \(1001000001000_2 \)
+    - Step \(72\) Right Shift Result:  \(4616_{10}\) - Binary Result: \(1001000001000_2 \)
 - **Step \(74\): Decimal:  \(4616_{10}\) = Binary: \(1001000001000_2\)**
-    - Step \(73\) Right Shift:  \(4616_{10}\) - Binary Result: \(100100000100_2 \)
+    - Step \(73\) Right Shift Result:  \(2308_{10}\) - Binary Result: \(100100000100_2 \)
 - **Step \(75\): Decimal:  \(2308_{10}\) = Binary: \(100100000100_2\)**
-    - Step \(74\) Right Shift:  \(2308_{10}\) - Binary Result: \(10010000010_2 \)
+    - Step \(74\) Right Shift Result:  \(1154_{10}\) - Binary Result: \(10010000010_2 \)
 - **Step \(76\): Decimal:  \(1154_{10}\) = Binary: \(10010000010_2\)**
-    - Step \(75\) Right Shift:  \(1154_{10}\) - Binary Result: \(1001000001_2 \)
+    - Step \(75\) Right Shift Result:  \(577_{10}\) - Binary Result: \(1001000001_2 \)
 - **Step \(77\): Decimal:  \(577_{10}\) = Binary: \(1001000001_2\)**
     - Left Shift \((2x)\): Decimal Result:  \(1154_{10}\) - Binary Result: \(10010000010_2 \)
     - Add \(X\): Decimal Result:  \(1731_{10}\) - Binary Result: \(11011000011_2 \)
     - Add \(1\): Decimal Result:  \(1732_{10}\) - Binary Result: \(11011000100_2 \)
 - **Step \(78\): Decimal:  \(1732_{10}\) = Binary: \(11011000100_2\)**
-    - Step \(77\) Right Shift:  \(1732_{10}\) - Binary Result: \(1101100010_2 \)
+    - Step \(77\) Right Shift Result:  \(866_{10}\) - Binary Result: \(1101100010_2 \)
 - **Step \(79\): Decimal:  \(866_{10}\) = Binary: \(1101100010_2\)**
-    - Step \(78\) Right Shift:  \(866_{10}\) - Binary Result: \(110110001_2 \)
+    - Step \(78\) Right Shift Result:  \(433_{10}\) - Binary Result: \(110110001_2 \)
 - **Step \(80\): Decimal:  \(433_{10}\) = Binary: \(110110001_2\)**
     - Left Shift \((2x)\): Decimal Result:  \(866_{10}\) - Binary Result: \(1101100010_2 \)
     - Add \(X\): Decimal Result:  \(1299_{10}\) - Binary Result: \(10100010011_2 \)
     - Add \(1\): Decimal Result:  \(1300_{10}\) - Binary Result: \(10100010100_2 \)
 - **Step \(81\): Decimal:  \(1300_{10}\) = Binary: \(10100010100_2\)**
-    - Step \(80\) Right Shift:  \(1300_{10}\) - Binary Result: \(1010001010_2 \)
+    - Step \(80\) Right Shift Result:  \(650_{10}\) - Binary Result: \(1010001010_2 \)
 - **Step \(82\): Decimal:  \(650_{10}\) = Binary: \(1010001010_2\)**
-    - Step \(81\) Right Shift:  \(650_{10}\) - Binary Result: \(101000101_2 \)
+    - Step \(81\) Right Shift Result:  \(325_{10}\) - Binary Result: \(101000101_2 \)
 - **Step \(83\): Decimal:  \(325_{10}\) = Binary: \(101000101_2\)**
     - Left Shift \((2x)\): Decimal Result:  \(650_{10}\) - Binary Result: \(1010001010_2 \)
     - Add \(X\): Decimal Result:  \(975_{10}\) - Binary Result: \(1111001111_2 \)
     - Add \(1\): Decimal Result:  \(976_{10}\) - Binary Result: \(1111010000_2 \)
 - **Step \(84\): Decimal:  \(976_{10}\) = Binary: \(1111010000_2\)**
-    - Step \(83\) Right Shift:  \(976_{10}\) - Binary Result: \(111101000_2 \)
+    - Step \(83\) Right Shift Result:  \(488_{10}\) - Binary Result: \(111101000_2 \)
 - **Step \(85\): Decimal:  \(488_{10}\) = Binary: \(111101000_2\)**
-    - Step \(84\) Right Shift:  \(488_{10}\) - Binary Result: \(11110100_2 \)
+    - Step \(84\) Right Shift Result:  \(244_{10}\) - Binary Result: \(11110100_2 \)
 - **Step \(86\): Decimal:  \(244_{10}\) = Binary: \(11110100_2\)**
-    - Step \(85\) Right Shift:  \(244_{10}\) - Binary Result: \(1111010_2 \)
+    - Step \(85\) Right Shift Result:  \(122_{10}\) - Binary Result: \(1111010_2 \)
 - **Step \(87\): Decimal:  \(122_{10}\) = Binary: \(1111010_2\)**
-    - Step \(86\) Right Shift:  \(122_{10}\) - Binary Result: \(111101_2 \)
+    - Step \(86\) Right Shift Result:  \(61_{10}\) - Binary Result: \(111101_2 \)
 - **Step \(88\): Decimal:  \(61_{10}\) = Binary: \(111101_2\)**
     - Left Shift \((2x)\): Decimal Result:  \(122_{10}\) - Binary Result: \(1111010_2 \)
     - Add \(X\): Decimal Result:  \(183_{10}\) - Binary Result: \(10110111_2 \)
     - Add \(1\): Decimal Result:  \(184_{10}\) - Binary Result: \(10111000_2 \)
 - **Step \(89\): Decimal:  \(184_{10}\) = Binary: \(10111000_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(97 (9)\)...**
-    - Step \(88\) Right Shift:  \(184_{10}\) - Binary Result: \(1011100_2 \)
+    - Step \(88\) Right Shift Result:  \(92_{10}\) - Binary Result: \(1011100_2 \)
 - **Step \(90\): Decimal:  \(92_{10}\) = Binary: \(1011100_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(97 (8)\)...**
-    - Step \(89\) Right Shift:  \(92_{10}\) - Binary Result: \(101110_2 \)
+    - Step \(89\) Right Shift Result:  \(46_{10}\) - Binary Result: \(101110_2 \)
 - **Step \(91\): Decimal:  \(46_{10}\) = Binary: \(101110_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(97 (7)\)...**
-    - Step \(90\) Right Shift:  \(46_{10}\) - Binary Result: \(10111_2 \)
+    - Step \(90\) Right Shift Result:  \(23_{10}\) - Binary Result: \(10111_2 \)
 - **Step \(92\): Decimal:  \(23_{10}\) = Binary: \(10111_2\)**
 - **Forecast: Growth stops at step: \(96\); Step Number for next guaranteed multi-bit reduction: \(97 (6)\)...**
     - Left Shift \((2x)\): Decimal Result:  \(46_{10}\) - Binary Result: \(101110_2 \)
@@ -2051,40 +1838,40 @@ Input Number Binary: 11111
     - Add \(1\): Decimal Result:  \(70_{10}\) - Binary Result: \(1000110_2 \)
 - **Step \(93\): Decimal:  \(70_{10}\) = Binary: \(1000110_2\)**
 **Forecast: Step Number for next guaranteed multi-bit reduction: \(97 (5)\)...**
-    - Step \(92\) Right Shift:  \(70_{10}\) - Binary Result: \(100011_2 \)
+    - Step \(92\) Right Shift Result:  \(35_{10}\) - Binary Result: \(100011_2 \)
 - **Step \(94\): Decimal:  \(35_{10}\) = Binary: \(100011_2\)**
 - **Forecast: Growth stops at step: \(96\); Step Number for next guaranteed multi-bit reduction: \(97 (4)\)...**
     - Left Shift \((2x)\): Decimal Result:  \(70_{10}\) - Binary Result: \(1000110_2 \)
     - Add \(X\): Decimal Result:  \(105_{10}\) - Binary Result: \(1101001_2 \)
     - Add \(1\): Decimal Result:  \(106_{10}\) - Binary Result: \(1101010_2 \)
 - **Step \(95\): Decimal:  \(106_{10}\) = Binary: \(1101010_2\)**
-    - Step \(94\) Right Shift:  \(106_{10}\) - Binary Result: \(110101_2 \)
+    - Step \(94\) Right Shift Result:  \(53_{10}\) - Binary Result: \(110101_2 \)
 - **Step \(96\): Decimal:  \(53_{10}\) = Binary: \(110101_2\)**
     - Left Shift \((2x)\): Decimal Result:  \(106_{10}\) - Binary Result: \(1101010_2 \)
     - Add \(X\): Decimal Result:  \(159_{10}\) - Binary Result: \(10011111_2 \)
     - Add \(1\): Decimal Result:  \(160_{10}\) - Binary Result: \(10100000_2 \)
 - **Step \(97\): Decimal:  \(160_{10}\) = Binary: \(10100000_2\)**
-    - Step \(96\) Right Shift:  \(160_{10}\) - Binary Result: \(1010000_2 \)
+    - Step \(96\) Right Shift Result:  \(80_{10}\) - Binary Result: \(1010000_2 \)
 - **Step \(98\): Decimal:  \(80_{10}\) = Binary: \(1010000_2\)**
-    - Step \(97\) Right Shift:  \(80_{10}\) - Binary Result: \(101000_2 \)
+    - Step \(97\) Right Shift Result:  \(40_{10}\) - Binary Result: \(101000_2 \)
 - **Step \(99\): Decimal:  \(40_{10}\) = Binary: \(101000_2\)**
-    - Step \(98\) Right Shift:  \(40_{10}\) - Binary Result: \(10100_2 \)
+    - Step \(98\) Right Shift Result:  \(20_{10}\) - Binary Result: \(10100_2 \)
 - **Step \(100\): Decimal:  \(20_{10}\) = Binary: \(10100_2\)**
-    - Step \(99\) Right Shift:  \(20_{10}\) - Binary Result: \(1010_2 \)
+    - Step \(99\) Right Shift Result:  \(10_{10}\) - Binary Result: \(1010_2 \)
 - **Step \(101\): Decimal:  \(10_{10}\) = Binary: \(1010_2\)**
-    - Step \(100\) Right Shift:  \(10_{10}\) - Binary Result: \(101_2 \)
+    - Step \(100\) Right Shift Result:  \(5_{10}\) - Binary Result: \(101_2 \)
 - **Step \(102\): Decimal:  \(5_{10}\) = Binary: \(101_2\)**
     - Left Shift \((2x)\): Decimal Result:  \(10_{10}\) - Binary Result: \(1010_2 \)
     - Add \(X\): Decimal Result:  \(15_{10}\) - Binary Result: \(1111_2 \)
     - Add \(1\): Decimal Result:  \(16_{10}\) - Binary Result: \(10000_2 \)
 - **Step \(103\): Decimal:  \(16_{10}\) = Binary: \(10000_2\)**
-    - Step \(102\) Right Shift:  \(16_{10}\) - Binary Result: \(1000_2 \)
+    - Step \(102\) Right Shift Result:  \(8_{10}\) - Binary Result: \(1000_2 \)
 - **Step \(104\): Decimal:  \(8_{10}\) = Binary: \(1000_2\)**
-    - Step \(103\) Right Shift:  \(8_{10}\) - Binary Result: \(100_2 \)
+    - Step \(103\) Right Shift Result:  \(4_{10}\) - Binary Result: \(100_2 \)
 - **Step \(105\): Decimal:  \(4_{10}\) = Binary: \(100_2\)**
-    - Step \(104\) Right Shift:  \(4_{10}\) - Binary Result: \(10_2 \)
+    - Step \(104\) Right Shift Result:  \(2_{10}\) - Binary Result: \(10_2 \)
 - **Step \(106\): Decimal:  \(2_{10}\) = Binary: \(10_2\)**
-    - Step \(105\) Right Shift:  \(2_{10}\) - Binary Result: \(1_2 \)
+    - Step \(105\) Right Shift Result:  \(1_{10}\) - Binary Result: \(1_2 \)
 
 
 ## D.2 State Graph Traversal of 31
