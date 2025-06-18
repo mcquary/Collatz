@@ -518,6 +518,43 @@ T^{(2N-1)}(X) = \underbrace{1}_{\text{MSB}}\dots\underbrace{b_{N-1}b_{N-2}\ldots
 \]
 The state of the higher order bits is less easily predicted and it based on the number of trailing 1s to determine, but the number of steps until a trailing sequence of at least two 0s is predictable
 
+Examples using 2 trailing 1s
+
+$X = a \cdot 2^N + (2^N - 1), \quad \text{for some } a \in \mathbb{N}.$
+
+Where $N=2$
+
+#### **Example 6.3.1: Case $ a = 0 $ (Binary $ 11_2 $)**  
+Let $ X = 3 $ (binary $ 11_2 $), so $ N = 2 $. Compute $ T^{(3)}(X) $:  
+1. $ T^{(1)}(3) = 3 \cdot 3 + 1 = 10 $ (binary $ 1010_2 $).  
+2. $ T^{(2)}(10) = \frac{10}{2} = 5 $ (binary $ 101_2 $).  
+3. $ T^{(3)}(5) = 3 \cdot 5 + 1 = 16 $ (binary $ 10000_2 $).  
+
+The binary representation of $ T^{(3)}(3) = 16 $ ends with **four consecutive zeros**. (Equation 7.2)  
+
+---
+
+#### **Example 6.3.2: Binary $ 1101011_2 $**  
+Let $ X = 107 $ (binary $ 1101011_2 $), which ends with $ N = 2 $ consecutive 1s. Compute $ T^{(3)}(X) $:  
+1. $ T^{(1)}(107) = 3 \cdot 107 + 1 = 322 $ (binary $ 101000010_2 $).  
+2. $ T^{(2)}(322) = \frac{322}{2} = 161 $ (binary $ 10100001_2 $).  
+3. $ T^{(3)}(161) = 3 \cdot 161 + 1 = 484 $ (binary $ 111100100_2 $).  
+
+The binary representation of $ T^{(3)}(107) = 484 $ ends with **two consecutive zeros**. (Equation 7.3)  
+
+---
+
+#### **Example 6.3.3: Binary $ 100011_2 $**  
+Let $ X = 35 $ (binary $ 100011_2 $), which ends with $ N = 2 $ consecutive 1s. Compute $ T^{(3)}(X) $:  
+1. $ T^{(1)}(35) = 3 \cdot 35 + 1 = 106 $ (binary $ 1101010_2 $).  
+2. $ T^{(2)}(106) = \frac{106}{2} = 53 $ (binary $ 110101_2 $).  
+3. $ T^{(3)}(53) = 3 \cdot 53 + 1 = 160 $ (binary $ 10100000_2 $).  
+
+The binary representation of $ T^{(3)}(35) = 160 $ ends with **six consecutive zeros**. (Equation 7.4)  
+
+---
+
+From the examples you can see you will have at least 2 trailing 0s, but could have more.
 
 ### Section 7: Rigorous Bit-Length Bounds in Collatz Sequences
 
