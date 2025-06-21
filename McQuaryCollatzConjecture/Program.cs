@@ -135,7 +135,7 @@ namespace Collatz
                                     else
                                         sbInput.Append("1");
                                 }
-                                inputValue = sbInput.ToString();
+                                inputValue = string.Join("", sbInput.ToString().Reverse());
                                 break;
                             case "2":
                                 var val = BigInteger.Parse(inputValue);
